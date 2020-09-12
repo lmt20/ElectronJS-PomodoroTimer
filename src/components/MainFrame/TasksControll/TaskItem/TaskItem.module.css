@@ -1,0 +1,61 @@
+.task-item-control {
+    display: flex;
+    width: 100%;
+    border-radius: 0.3rem;
+    padding: 0.7rem 1rem;
+    border-width: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px;
+    cursor: pointer;
+    border-left: 6px solid transparent;
+}
+.task-item-control--selected {
+    border-left: 6px solid #222;
+}
+.task-item-control:hover {
+    border-left: 6px solid #BBB;
+}
+.task-item-control--selected:hover {
+    border-left: 6px solid #222;
+}
+.task-item-control:focus {
+    outline: none;
+}
+
+.task-name {
+    font-size: 1.1rem;
+    color: #555555;
+    font-weight: bold;
+    padding-left: 1rem;
+}
+
+.divide-completed {
+    font-size: 1.4rem;
+    color: #BBB;
+    font-weight: bolder;
+}
+
+.more-vertical-icon {
+    padding: 3px 4px;
+    border-radius: 0.3rem;   
+    color: #AAA;
+    border: 1px #AAA solid;
+    margin-left: 1rem;
+}
+
+.align-vertical-content {
+    display: flex;
+    align-items: center;
+}
+
+.icon-completed {
+    background-color: #F05B56;
+    color: red;
+}
+
+.text-completed {
+    text-decoration: line-through;
+    color: #BBBBBB;
+}

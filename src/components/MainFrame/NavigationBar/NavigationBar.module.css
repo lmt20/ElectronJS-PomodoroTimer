@@ -1,0 +1,27 @@
+.flexbox-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid #0000001A;
+
+}
+
+.icon-header-area {
+    display: flex;
+    align-items: flex-end;
+    line-height: 1.4rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.header-text{
+    padding-left: 0.3rem;
+}
+
+.header-text:hover {
+    cursor: pointer;
+}
+.icon-header-area:hover {
+    cursor: pointer;
+}

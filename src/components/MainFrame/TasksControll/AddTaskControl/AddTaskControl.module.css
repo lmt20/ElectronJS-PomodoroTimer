@@ -1,0 +1,16 @@
+.btn-add-task {
+    background-color: #DC534E;
+    border-radius: 0.5rem;
+    border: 0.15rem dashed #E88583;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    color: #F5BEBD;
+    cursor: pointer;
+}
+
+.btn-add-task:focus {
+    outline: none;
+}

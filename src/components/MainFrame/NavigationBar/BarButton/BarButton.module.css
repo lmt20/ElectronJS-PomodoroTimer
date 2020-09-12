@@ -1,0 +1,15 @@
+.btn-header-bar {
+    background-color: #F27471;
+    border-width: 0;
+    border-radius: 0.3rem;
+    padding:0.4rem 0.8rem;
+    color: #fff;
+    font-size: 0.9rem;
+    /* display: flex; */
+    /* align-items: center; */
+    margin-left: 1rem;
+}
+
+.btn-header-bar:hover {
+    cursor: pointer;
+}

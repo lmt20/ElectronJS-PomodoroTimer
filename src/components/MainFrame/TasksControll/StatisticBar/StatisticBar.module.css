@@ -1,0 +1,17 @@
+.statistic-bar {
+    background-color: #F16965;
+    border-radius: 0 0 0.2rem 0.2rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    padding: 1.5rem;
+    border-top: 0.09rem solid #fff;
+    font-size: 1.2rem;
+    text-align: center; 
+    color: #ffffffb3;
+}
+
+.bigger-font {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}

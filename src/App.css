@@ -1,0 +1,17 @@
+* {
+	box-sizing: border-box;
+}
+
+@font-face {
+	font-family: 'Arial-Rounded';
+    src: url('public/fonts/Arial-Rounded.woff2') format('woff2'),
+        url('public/fonts/Arial-Rounded.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', Arial, Helvetica, sans-serif;	
+}
+

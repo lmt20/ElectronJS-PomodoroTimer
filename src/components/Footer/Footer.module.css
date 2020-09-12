@@ -1,0 +1,34 @@
+.footer {
+    border-top: 2px solid #efefef;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+.footer__sitemap {
+    margin-top: 1.7rem;
+}
+.footer__sitemap a {
+    text-decoration: none;
+    font-size:  1rem;
+
+    font-weight: bolder;
+    color: #785E60;
+    padding: 0 0.4rem;
+}
+.footer__sitemap_icon a{
+    cursor: pointer;
+}
+
+.footer__me {
+    color: #785E60;
+}
+.footer__me a {
+    text-decoration: none;
+    color: #E96D73;
+    font-weight: bolder;
+}
+
+.footer__allrights {
+    padding: 1rem 0;
+    font-size: 0.8rem;
+    color: #A19192;
+}
