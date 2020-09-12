@@ -14,3 +14,108 @@
 .btn-add-task:focus {
     outline: none;
 }
+.add-form-container {
+    background-color: #fff;
+    border-radius: 0.6rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+}
+
+.add-form {
+    border-radius: 0.6rem 0.6rem 0 0 ;
+    background-color: #fff;
+    padding: 1.9rem 1.2rem 0.8rem 1.2rem;
+}
+
+.input-task-name {
+    display: block;
+    width: 100%;
+    border-width: 0;
+    font-size: 1.42rem;
+    font-weight: bold;
+}
+
+.input-task-name::placeholder {
+    color: #bbb;
+}
+
+.input-task-name:focus {
+    outline: none;
+}
+
+.est-label {
+    color: rgb(85, 85, 85);
+    font-weight: bolder;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+}
+
+.input-est {
+    background-color: rgb(239, 239, 239);
+    width: 5rem;
+    padding: 0.7rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-width: 0;
+    color: rgb(85, 85, 85);
+    border-radius: 0.2rem;
+    margin-right: 1rem;
+}
+
+.input-est:focus {
+    outline: none;
+}
+.vertical-center-align {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+.vertical-center-align button {
+    padding: 0.3rem 0.55rem;
+    color: rgb(85, 85, 85);
+    opacity: 0.9;
+    border: 1px solid rgb(223, 223, 223);
+    display: inline-block;
+    cursor: pointer;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px;
+    text-align: center;
+    justify-content: center;
+    border-radius: 0.2rem;
+    /* margin: 0 2px; */
+}
+.vertical-center-align button:focus {
+    outline: none;
+}
+
+.button-action-container {
+    background-color: rgb(239, 239, 239);
+    text-align: right;
+    border-radius: 0.6rem;
+    padding: 1rem;
+    padding-right: 1.5rem;
+}
+.button-action-container button:focus {
+    outline: none;
+}
+.btn-cancel {
+    color: #888;
+    font-family: Arial;
+    font-size: 1rem;
+    font-weight: bolder;
+    padding: 0.7rem 1.1rem;
+    margin-right: 0.5rem;
+    border-width: 0;
+    
+}
+
+.btn-save {
+    color: #fff;
+    background-color: rgb(171, 171, 171);
+    border-width: 0;
+    border-radius: 0.35rem;
+    font-family: Arial;
+    font-size: 0.9rem;
+    font-weight: normal;
+    padding: 0.7rem 1.1rem;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px;
+}
