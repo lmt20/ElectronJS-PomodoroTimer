@@ -1,26 +1,11 @@
-.btn-add-task {
-    background-color: #DC534E;
-    border-radius: 0.5rem;
-    border: 0.15rem dashed #E88583;
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    color: #F5BEBD;
-    cursor: pointer;
-}
-
-.btn-add-task:focus {
-    outline: none;
-}
-.add-form-container {
+.edit-form-container {
     background-color: #fff;
     border-radius: 0.6rem;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+    margin-bottom: 2rem;
 }
 
-.add-form {
+.edit-form {
     border-radius: 0.6rem 0.6rem 0 0 ;
     background-color: #fff;
     padding: 1.9rem 1.2rem 0.8rem 1.2rem;
@@ -88,18 +73,20 @@
     outline: none;
 }
 
-.button-action-container-0 {
+.button-action-container {
     background-color: rgb(239, 239, 239);
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border-radius: 0.6rem;
     padding: 1rem;
     padding-right: 1.5rem;
 }
-.button-action-container-0 button {
+.button-action-container button {
     cursor: pointer;
 }
 
-.button-action-container-0 button:focus {
+.button-action-container button:focus {
     outline: none;
 }
 .btn-cancel {
@@ -109,8 +96,16 @@
     font-weight: bolder;
     padding: 0.7rem 1.1rem;
     margin-right: 0.5rem;
-    border-width: 0;
-    
+    border-width: 0; 
+}
+.btn-delete {
+    color: #888;
+    font-family: Arial;
+    font-size: 1rem;
+    font-weight: bolder;
+    padding: 0.7rem 2rem;
+    margin-right: 0.5rem;
+    border-width: 0; 
 }
 
 .btn-save {

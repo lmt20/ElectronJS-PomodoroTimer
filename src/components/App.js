@@ -1,4 +1,5 @@
 import React from 'react'
+import $ from 'jquery'
 import MainFrame from './MainFrame/MainFrame'
 import AboutFrame from './AboutFrame/AboutFrame'
 import Footer from './Footer/Footer'

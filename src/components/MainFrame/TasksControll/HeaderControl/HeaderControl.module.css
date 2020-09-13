@@ -4,5 +4,37 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     /* justify-items: baseline; */
+}
+
+.header-option {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    color: #4F2D2B;
+    font-size: 1rem;
+    font-weight: normal;
+    background-color: #fff;
+    border-radius: 0.3rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+}
+.header-option:focus {
+    outline: none;
+}
+
+.header-option div div{
+    padding: 0.7rem 1rem;
+    width: 12rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.header-option div div:hover {
+    background-color: #efefef;
+}
+
+.header-option-hide {
+    display: none;
 }

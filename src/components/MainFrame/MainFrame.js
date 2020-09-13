@@ -10,6 +10,7 @@ const MainFrame = () => {
             _id: 1,
             name: "Writing reports",
             isCompleted: false,
+            isDisplayed: true,
             completedIntervalNum: 2,
             settedIntervalNum: 5,
         },
@@ -17,6 +18,7 @@ const MainFrame = () => {
             _id: 2,
             name: "Coding",
             isCompleted: false,
+            isDisplayed: true,
             completedIntervalNum: 1,
             settedIntervalNum: 2,
         },
@@ -24,6 +26,7 @@ const MainFrame = () => {
             _id: 3,
             name: "Running",
             isCompleted: true,
+            isDisplayed: true,
             completedIntervalNum: 1,
             settedIntervalNum: 1,
         },
@@ -31,6 +34,7 @@ const MainFrame = () => {
             _id: 4,
             name: "Reading Book",
             isCompleted: true,
+            isDisplayed: true,
             completedIntervalNum: 3,
             settedIntervalNum: 2,
         },
@@ -38,11 +42,30 @@ const MainFrame = () => {
     const [statusLabel, setStatusLabel] = useState('Time to Work!')
     const [startingNotify, setStartingNotify] = useState(true)
     
+    const [pomodoroSetting, setPomodoroSetting] = useState({
+        pomoTime: 24,
+        shortBreakTime: 6,
+        longBreakTime: 19,
+        longBreakInterval: 3,
+    })
+    
+    const [timePast, setTimePast] = useState(0)
+    const [isTimeStopping, setIsTimeStopping] = useState(true)
 
     return (
         <div className = "main-frame">
             <NavigationBar />
-			<TimerBoard statusLabel={statusLabel} startingNotify={startingNotify}/>
+            <TimerBoard 
+                statusLabel={statusLabel} 
+                startingNotify={startingNotify}
+                pomodoroSetting={pomodoroSetting}
+                timePast={timePast}
+                setTimePast={setTimePast}
+                // currentStatus={currentStatus}
+                // setCurrentStatus={setCurrentStatus}
+                isTimeStopping={isTimeStopping}
+                setIsTimeStopping={setIsTimeStopping}
+            />
             <TasksControll 
                 tasks={tasks} 
                 setTasks={setTasks} 

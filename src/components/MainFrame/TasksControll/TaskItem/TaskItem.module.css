@@ -2,7 +2,7 @@
     display: flex;
     width: 100%;
     border-radius: 0.3rem;
-    padding: 0.7rem 1rem;
+    padding: 0.85rem 1rem;
     border-width: 0;
     justify-content: space-between;
     align-items: center;
@@ -10,14 +10,19 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
     cursor: pointer;
     border-left: 6px solid transparent;
-}
-.task-item-control--selected {
-    border-left: 6px solid #222;
+    background-color: #fff;
 }
 .task-item-control:hover {
     border-left: 6px solid #BBB;
 }
+.task-item-control--selected {
+    border-left: 6px solid #222;
+    /* border-left: 6px solid rgb(236, 232, 232); */
+    padding: 0.75rem 1rem;
+    margin-top: 0.8rem;
+}
 .task-item-control--selected:hover {
+    /* border-left: 6px solid #222; */
     border-left: 6px solid #222;
 }
 .task-item-control:focus {

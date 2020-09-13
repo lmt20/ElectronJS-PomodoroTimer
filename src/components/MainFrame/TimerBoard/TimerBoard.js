@@ -1,9 +1,29 @@
-import React from 'react'
+import React, {useState} from 'react'
 import TimerTypeButton from './TimerTypeButton/TimerTypeButton'
 import TimerDisplay from './TimerDisplay/TimerDisplay'
 import './TimerBoard.module.css'
 
 const TimerBoard = (props) => {
+    const [currentStatus, setCurrentStatus] = useState("pomo")
+    
+    const pomodoroSetting = props.pomodoroSetting;
+    const {pomoTime, shortBreakTime, longBreakTime,longBreakInterval } = props.pomodoroSetting;
+    const targetTime = (() => {
+        if(currentStatus === "pomo"){
+            return pomoTime
+        }
+        else if(currentStatus === "short-break"){
+            return shortBreakTime
+        }
+        else if(currentStatus === "long-break"){
+            return longBreakTime
+        }
+    })();
+    // const [targetTime, setTargetTime] = useState(25)
+    // if(currentStatus === "pomo"){
+    //     setTargetTime
+    // }
+
     return (
         <React.Fragment>
             <div className="time-board">
@@ -13,7 +33,7 @@ const TimerBoard = (props) => {
                         <TimerTypeButton name="Short Break"></TimerTypeButton>
                         <TimerTypeButton name="Long Break"></TimerTypeButton>
                     </div>
-                    <TimerDisplay></TimerDisplay>
+                    <TimerDisplay targetTime={targetTime}></TimerDisplay>
                     <button className="btn-start-working">START</button>
                     <p>&nbsp;</p>
                 </div>
