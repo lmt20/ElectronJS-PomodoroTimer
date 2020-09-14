@@ -7,13 +7,11 @@ import Footer from './Footer/Footer'
 const App = () => {
 	return (
 		<React.Fragment>
-			<div style={{backgroundColor: '#F05B56'}}>
-				<MainFrame />
-			</div>
-			<div style={{backgroundColor: '#fff'}}>
+			<MainFrame />
+			<div style={{ backgroundColor: '#fff' }}>
 				<AboutFrame />
 			</div>
-			<div style={{backgroundColor: '#fff'}}>
+			<div style={{ backgroundColor: '#fff' }}>
 				<Footer />
 			</div>
 		</React.Fragment>

@@ -10,14 +10,34 @@
     font-size: 1.8rem;
     color: #F16965;
     font-weight: bold;
-    padding: 0.9rem 4rem;
+    padding: 0.9rem 2rem;
     border-width: 0;   
     border-radius: 0.3rem;
     display: block;
     margin: auto;
+    width: 15rem;
+    text-align: center;    
     margin-bottom: 0.5rem;
+}
+
+.paused {
+    border-bottom: 0.45rem solid #E8E8E8;
 }
 
 .btn-start-working:focus {
     outline: none;
+}
+
+.timerboard-background__short-break--color {
+    background-color: #5EAFB1;
+}
+.timerboard-background__long-break--color {
+    background-color: #5D9AC7;
+}
+
+.btn-text__short-break--color {
+    color: #4CA6A9;
+}
+.btn-text__long-break--color {
+    color: #498FC1;
 }

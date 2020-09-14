@@ -8,8 +8,15 @@
     cursor: pointer;
 }
 
-.timer-type-selected {
+.tab__pomo--selected {
     background-color: #CD5955;
     font-weight: bold;
 }
 
+.tab__short-break--selected {
+    background-color: #4F9497;
+}
+
+.tab__long-break--selected {
+    background-color: #4F83A9;
+}

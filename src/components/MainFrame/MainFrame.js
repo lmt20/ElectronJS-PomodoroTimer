@@ -48,30 +48,35 @@ const MainFrame = () => {
         longBreakTime: 19,
         longBreakInterval: 3,
     })
-    
+    const [tab, setTab] = useState('pomo')
     const [timePast, setTimePast] = useState(0)
     const [isTimeStopping, setIsTimeStopping] = useState(true)
-
     return (
-        <div className = "main-frame">
-            <NavigationBar />
-            <TimerBoard 
-                statusLabel={statusLabel} 
-                startingNotify={startingNotify}
-                pomodoroSetting={pomodoroSetting}
-                timePast={timePast}
-                setTimePast={setTimePast}
-                // currentStatus={currentStatus}
-                // setCurrentStatus={setCurrentStatus}
-                isTimeStopping={isTimeStopping}
-                setIsTimeStopping={setIsTimeStopping}
-            />
-            <TasksControll 
-                tasks={tasks} 
-                setTasks={setTasks} 
-                setStatusLabel={setStatusLabel} 
-                setStartingNotify={setStartingNotify}
-            />
+        <div className = {"main-container"
+        + (tab === "short-break" ? ' main-container__short-break' : '')
+        + (tab === "long-break" ? ' main-container__long-break' : '')
+        }>
+            <div className = "main-frame">
+                <NavigationBar />
+                <TimerBoard 
+                    statusLabel={statusLabel} 
+                    startingNotify={startingNotify}
+                    pomodoroSetting={pomodoroSetting}
+                    timePast={timePast}
+                    setTimePast={setTimePast}
+                    setTab={setTab}
+                    // currentStatus={currentStatus}
+                    // setCurrentStatus={setCurrentStatus}
+                    isTimeStopping={isTimeStopping}
+                    setIsTimeStopping={setIsTimeStopping}
+                />
+                <TasksControll 
+                    tasks={tasks} 
+                    setTasks={setTasks} 
+                    setStatusLabel={setStatusLabel} 
+                    setStartingNotify={setStartingNotify}
+                />
+            </div>
         </div>
     )
 }

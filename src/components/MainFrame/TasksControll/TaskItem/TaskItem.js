@@ -82,18 +82,26 @@ const TaskItem = (props) => {
 
                     <button className={"task-item-control" + " " + props.isSelecting} onClick={() => props.clickTaskItemButton(props.task._id, props.task.name)}>
                         <div className={"align-vertical-content"}>
-                            <span onClick={() => props.clickTaskItemIcon(props.task._id)}><CheckCircle color="#fff" size="2rem" style={{ backgroundColor: props.task.isCompleted ? '#F05B56' : "#DFDFDF", borderRadius: "50%" }} /></span>
+                            <span onClick={() => props.clickTaskItemIcon(props.task._id)}>
+                                <CheckCircle
+                                    color="#fff"
+                                    size="2rem"
+                                    style={{ backgroundColor: props.task.isCompleted ? ('#F05B56' )
+                                    : "#DFDFDF", borderRadius: "50%" }}
+                                    className={"check-circle" + (props.task.isCompleted ? " check-circle--completed" : "")}
+                                     />
+                            </span>
                             <span className={"task-name" + (props.task.isCompleted ? " text-completed" : "")}>{props.task.name}</span>
                         </div>
                         <div className="align-vertical-content">
                             <span style={{ color: '#BBB', fontWeight: 'bolder', fontSize: '1.4rem' }}>{props.task.completedIntervalNum}/
                     <span style={{ fontSize: '1.3rem' }}>{props.task.settedIntervalNum}</span></span>
-                            <span 
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                props.setIsAddingTask(false)
-                                props.setEdittingTaskId(props.task._id)
-                            }}
+                            <span
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    props.setIsAddingTask(false)
+                                    props.setEdittingTaskId(props.task._id)
+                                }}
                             ><MoreVertical size="2rem" className="more-vertical-icon" /></span>
                         </div>
                     </button>

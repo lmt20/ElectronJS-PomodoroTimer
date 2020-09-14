@@ -64,3 +64,18 @@
     text-decoration: line-through;
     color: #BBBBBB;
 }
+
+.check-circle {
+    border-radius: 50% ;
+    background-color: #DFDFDF;
+}
+
+.check-circle--completed {
+    background-color: #F05B56;
+}
+.check-circle:hover {
+    opacity: 0.65;
+}
+.check-circle--completed:hover {
+    opacity: 0.7;
+}
