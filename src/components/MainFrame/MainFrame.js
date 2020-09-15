@@ -48,6 +48,11 @@ const MainFrame = () => {
         longBreakTime: 19,
         longBreakInterval: 3,
     })
+    const [changedSetting, setChangedSetting] = useState({
+        pomoTime: false,
+        shortBreakTime: false,
+        longBreakTime: false
+    })
     const [tab, setTab] = useState('pomo')
     const [timePast, setTimePast] = useState(0)
     const [isTimeStopping, setIsTimeStopping] = useState(true)
@@ -57,11 +62,15 @@ const MainFrame = () => {
         + (tab === "long-break" ? ' main-container__long-break' : '')
         }>
             <div className = "main-frame">
-                <NavigationBar tab={tab}/>
+                <NavigationBar tab={tab}
+                 pomodoroSetting={pomodoroSetting} setPomodoroSetting={setPomodoroSetting}
+                 setChangedSetting={setChangedSetting}
+                 />
                 <TimerBoard 
                     statusLabel={statusLabel} 
                     startingNotify={startingNotify}
                     pomodoroSetting={pomodoroSetting}
+                    changedSetting={changedSetting}
                     timePast={timePast}
                     setTimePast={setTimePast}
                     setTab={setTab}

@@ -17,6 +17,9 @@ const NavigationBar = (props) => {
                 icon={<BarChart2 size="1rem" />}
                  name="Report"></BarButton>
                 <BarButton 
+                pomodoroSetting={props.pomodoroSetting}
+                setPomodoroSetting={props.setPomodoroSetting}
+                setChangedSetting={props.setChangedSetting}
                 tab={props.tab} 
                 icon={<Settings size="1rem" />} 
                 name="Setting"></BarButton >

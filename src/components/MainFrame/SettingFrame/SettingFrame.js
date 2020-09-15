@@ -20,7 +20,11 @@ const SettingFrame = (props) => {
         <div className={"setting-container"}>
             <div className="behind-layer"></div>
             <div ref={timeSettingRef}>
-                <TimerSetting setIsDisplaySetting={props.setIsDisplaySetting}>   
+                <TimerSetting setIsDisplaySetting={props.setIsDisplaySetting} 
+                setPomodoroSetting={props.setPomodoroSetting}
+                pomodoroSetting={props.pomodoroSetting}
+                setChangedSetting={props.setChangedSetting}
+                >   
     
                 </TimerSetting>
             </div>

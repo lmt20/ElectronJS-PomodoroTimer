@@ -1,8 +1,48 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { X } from 'react-feather'
 import './TimerSetting.module.css'
 
 const TimerSetting = (props) => {
+    const [originalPomodoroSetting, setOriginalPomodoroSetting] = useState(props.pomodoroSetting)
+    const [pomodoroSetting, setPomodoroSetting] = useState(props.pomodoroSetting)
+    const changeSetting = (e) => {
+        if(e.target.name === 'pomo'){
+            setPomodoroSetting({
+                ...pomodoroSetting, 
+                pomoTime: +e.target.value
+            })
+        }
+        else if(e.target.name === 'short-break'){
+            setPomodoroSetting({
+                ...pomodoroSetting, 
+                shortBreakTime: +e.target.value
+            })
+        }
+        else if(e.target.name === 'long-break'){
+            setPomodoroSetting({
+                ...pomodoroSetting, 
+                longBreakTime: +e.target.value
+            })
+        }
+        else if(e.target.name === 'long-break-interval'){
+            setPomodoroSetting({
+                ...pomodoroSetting, 
+                longBreakInterval: +e.target.value
+            })
+        }   
+    }
+    const saveSetting = () => {
+        const isPomoTimeSettingChanged = originalPomodoroSetting.pomoTime !== pomodoroSetting.pomoTime;
+        const isShortBreakTimeSettingChanged = originalPomodoroSetting.shortBreakTime !== pomodoroSetting.shortBreakTime;
+        const isLongBreakTimeSettingChanged = originalPomodoroSetting.longBreakTime !== pomodoroSetting.longBreakTime;
+        props.setChangedSetting({
+            pomoTime: isPomoTimeSettingChanged,
+            shortBreakTime: isShortBreakTimeSettingChanged,
+            longBreakTime: isLongBreakTimeSettingChanged})
+
+        props.setPomodoroSetting({...pomodoroSetting})
+        props.setIsDisplaySetting(false)
+    }
     return (
         <div className={"timer-setting"}>
             <div className="editting-timer-setting">
@@ -17,15 +57,27 @@ const TimerSetting = (props) => {
                     <div className="edit-items">
                         <div>
                             <p>Pomodoro</p>
-                            <input type="number" step={1} value="25"></input>
+                            <input type="number" step={1}
+                            name="pomo"
+                            value={pomodoroSetting.pomoTime} 
+                            onChange={(e) => changeSetting(e) }
+                            ></input>
                         </div>
                         <div>
                             <p>Short Break</p>
-                            <input type="number" step={1} value="5"></input>
+                            <input type="number" step={1}
+                            name="short-break"
+                            value={pomodoroSetting.shortBreakTime}
+                            onChange={(e) => changeSetting(e) }
+                            ></input>
                         </div>
                         <div>
                             <p>Long Break</p>
-                            <input type="number" step={1} value="15"></input>
+                            <input type="number" step={1}
+                            name="long-break"
+                            value={pomodoroSetting.longBreakTime}
+                            onChange={(e) => changeSetting(e) }
+                            ></input>
                         </div>
                     </div>
                 </div>
@@ -47,7 +99,11 @@ const TimerSetting = (props) => {
                 </div>
                 <div className='edit-item-container edit-items'>
                     <h3 style={{ marginBottom: '0.3rem' }}>Long Break interval</h3>
-                    <input type="number" step={1} value="4"></input>
+                    <input type="number" step={1}
+                        name="long-break-interval"
+                        value={pomodoroSetting.longBreakInterval}
+                        onChange={(e) => changeSetting(e) }
+                     ></input>
                 </div>
                 <div className='edit-item-container edit-items'>
                     <h3 style={{ marginBottom: '0.3rem' }}>Dark Mode when running</h3>
@@ -70,9 +126,7 @@ const TimerSetting = (props) => {
                 </div>
             </div>
             <div className="btn-container-timer-setting">
-                <button onClick={() => {
-                    props.setIsDisplaySetting(false)
-                }}>OK</button>
+                <button onClick={() => saveSetting() }>OK</button>
             </div>
         </div>
     )
