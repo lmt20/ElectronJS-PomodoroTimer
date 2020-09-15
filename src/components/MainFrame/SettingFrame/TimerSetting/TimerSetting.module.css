@@ -1,0 +1,151 @@
+.timer-setting {
+    position: relative ;
+    width: 25rem;
+    /* height: 40.5rem; */
+    height: 90%;
+    top: 1.9rem;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 0.7rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+    transition: all 0.2s ease-in 0s;
+    /* b */
+}
+.header-txt {
+    color: rgb(187, 187, 187);
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 0.1rem; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+}
+.header-txt span {
+    transform-origin: left;
+    transform: scaleX(1.1);
+}
+
+.edit-item-container {
+    border-top: 1px solid rgba(182, 165, 166, 0.2);
+    padding: 1rem 0;
+}
+
+.edit-item-container h3{
+    display: flex;
+    align-self: center;
+    margin: 0;
+    color: rgb(85, 85, 85);
+    font-weight: bold;
+}
+.edit-item-container p{
+    display: inline-block;
+    margin: 0;
+    color:rgb(187, 187, 187);
+}
+
+.edit-items {
+    display: flex;
+    justify-content: space-between;
+}
+.edit-items input[type="number"] {
+    width: 6.5rem;
+    padding: 0.7rem 0.7rem;
+    background-color: rgb(239, 239, 239);
+    border-width: 0;
+    color: rgb(85, 85, 85);
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    margin-top: 0.4rem;
+}
+.edit-items input:focus {
+    outline: none;
+}
+.checkbox-icon {
+        display: inline-block;
+        width: 4.2rem;
+        height: 2.1rem;
+        border-radius: 2.1rem;
+        background-color: rgb(204, 204, 204);
+}
+.checkbox-icon div {
+    display: inline-block;
+    width: 1.9rem;
+    height: 1.9rem;
+    margin: 0.1rem;
+    background-color: #fff;
+    border-radius: 2rem;
+}
+
+.slider {
+    /* appearance: none; */
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0.3rem;
+    width: 10rem;
+    height: 0.5rem;
+    background-color:#ccc;
+    outline: none;
+
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow:0px 1px 10px rgba(0, 0, 0, 0.3) ;
+  }
+
+  .sltNotifyAt {
+    width: 6.5rem;
+    padding: 0.7rem 0.7rem;
+    background-color: rgb(239, 239, 239);
+    border-width: 0;
+    color: rgb(85, 85, 85);
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    margin-top: 0.4rem;
+    margin-right: 0.4rem;
+  }
+  .sltNotifyAt option {
+      border-width: none;
+  }
+  .sltNotifyAt option:focus {
+      outline: none;
+  }
+  .sltNotifyAt option:hover{
+      background-color: rgb(239, 239, 239);
+  } 
+
+  .sltNotifyAt:focus {
+      outline: none;
+  }
+
+  .btn-container-timer-setting {
+      background-color: #EFEFEF;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1.5rem;
+      border-radius: 0 0 0.7rem 0.7rem;
+  }
+
+  
+  .btn-container-timer-setting button {
+      cursor: pointer;
+      background-color: #373737;
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px;
+      border-width: 0;
+      padding: 0.56rem 1.5rem;
+      border-radius: 0.35rem;
+      color: #fff;
+  }
+  .btn-container-timer-setting button:hover {
+    background-color: #272727;
+  }
+  .btn-container-timer-setting button:active {
+    outline: none;
+  }

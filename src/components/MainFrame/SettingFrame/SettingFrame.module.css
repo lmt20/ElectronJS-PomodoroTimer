@@ -1,0 +1,24 @@
+.setting-container {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-family: 'Arial-Rounded';
+    z-index: 999999;
+}
+.behind-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    opacity: 0.15;
+}
+
+.editting-timer-setting {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}

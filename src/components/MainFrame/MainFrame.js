@@ -57,7 +57,7 @@ const MainFrame = () => {
         + (tab === "long-break" ? ' main-container__long-break' : '')
         }>
             <div className = "main-frame">
-                <NavigationBar />
+                <NavigationBar tab={tab}/>
                 <TimerBoard 
                     statusLabel={statusLabel} 
                     startingNotify={startingNotify}
@@ -75,6 +75,7 @@ const MainFrame = () => {
                     setTasks={setTasks} 
                     setStatusLabel={setStatusLabel} 
                     setStartingNotify={setStartingNotify}
+                    tab={tab}
                 />
             </div>
         </div>

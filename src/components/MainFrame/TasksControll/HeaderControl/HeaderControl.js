@@ -22,6 +22,15 @@ const HeaderControl = (props) => {
             };
         }
     }, [isDisplayMoreOption]);
+
+    let moreIconBackgroundColor = "#F16965";
+    if(props.tab === "short-break"){
+        moreIconBackgroundColor = "#6CB6B8"
+    }
+    else if(props.tab === "long-break"){
+        moreIconBackgroundColor = "#6AA3CC"
+    }
+    
     return (
         <div className="header-control">
             <span>Tasks</span>
@@ -29,7 +38,7 @@ const HeaderControl = (props) => {
                 setIsDisplayMoreOption(!isDisplayMoreOption)
             }}>
                 <MoreVertical
-                    style={{ backgroundColor: "#F16965", padding: "3px 4px", borderRadius: "0.3rem" }}
+                    style={{ backgroundColor: moreIconBackgroundColor, padding: "3px 4px", borderRadius: "0.3rem" }}
                     size="2rem"
                 />
             </span>

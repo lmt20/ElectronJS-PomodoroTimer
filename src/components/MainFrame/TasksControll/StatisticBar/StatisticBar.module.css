@@ -15,3 +15,11 @@
     font-weight: bold;
     color: #fff;
 }
+
+
+.statistic-bar--short-break {
+    background-color: #5EAFB2;
+}
+.statistic-bar--long-break {
+    background-color: #5C9AC7;
+}

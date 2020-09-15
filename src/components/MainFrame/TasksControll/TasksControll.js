@@ -55,7 +55,7 @@ const TasksControll = (props) => {
     }
     return (
         <div>
-            <HeaderControl clearFinishedTasks={clearFinishedTasks}/>
+            <HeaderControl clearFinishedTasks={clearFinishedTasks} tab={props.tab}/>
             <hr />
             <div style={{ margin: "1.3rem 0" }}>
                 {
@@ -87,8 +87,9 @@ const TasksControll = (props) => {
                 tasks={tasks}
                 setTasks={props.setTasks}
                 setEdittingTaskId={setEdittingTaskId}
+                tab={props.tab}
             />
-            <StatisticBar />
+            <StatisticBar tab={props.tab} />
             <p>&nbsp;</p>
         </div>
     )

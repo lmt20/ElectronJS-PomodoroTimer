@@ -7,14 +7,23 @@ import BarButton from './BarButton/BarButton';
 import './NavigationBar.module.css';
 
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
     return (
         <div className="flexbox-container">
             <a className="icon-header-area"><CheckCircle /> <span className="header-text"> Pomofocus</span></a>
             <span>
-                <BarButton icon={<BarChart2 size="1rem" />} name="Report"></BarButton>
-                <BarButton icon={<Settings size="1rem" />} name="Setting"></BarButton>
-                <BarButton icon={<User size="1rem" />} name="Login"></BarButton>
+                <BarButton 
+                tab={props.tab} 
+                icon={<BarChart2 size="1rem" />}
+                 name="Report"></BarButton>
+                <BarButton 
+                tab={props.tab} 
+                icon={<Settings size="1rem" />} 
+                name="Setting"></BarButton >
+                <BarButton 
+                tab={props.tab} 
+                icon={<User size="1rem" />} 
+                name="Login"></BarButton>
             </span>
         </div>
     )

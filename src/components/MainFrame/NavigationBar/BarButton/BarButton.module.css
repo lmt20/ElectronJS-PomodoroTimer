@@ -8,8 +8,18 @@
     /* display: flex; */
     /* align-items: center; */
     margin-left: 1rem;
-}
-
-.btn-header-bar:hover {
     cursor: pointer;
 }
+.btn-header-bar:focus {
+    outline: none;
+}
+
+.btn-header-bar--short-break {
+    background-color: #6CB6B8;
+}
+
+
+.btn-header-bar--long-break {
+    background-color: #6AA3CC;
+}
+

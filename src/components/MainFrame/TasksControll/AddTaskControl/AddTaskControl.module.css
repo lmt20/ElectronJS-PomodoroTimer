@@ -133,3 +133,14 @@
 .btn-save-valid:hover {
     opacity: 1;
 }
+
+.btn-add-task--short-break {
+    background-color: #46989B;
+    border: 0.15rem dashed #81BABC;
+    color: #BDDCDD;
+}
+.btn-add-task--long-break {
+    background-color: #4383B1;
+    border: 0.15rem dashed #80ACCB;
+    color: #9CBFD8;
+}

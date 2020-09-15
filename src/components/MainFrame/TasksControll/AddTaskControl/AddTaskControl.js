@@ -11,7 +11,7 @@ const AddTaskControl = (props) => {
     })
     const addingInputEle = useRef(null)
     useEffect(() => {
-        if(props.isAddingTask){
+        if (props.isAddingTask) {
             addingInputEle.current.focus()
         }
     }, [props.isAddingTask, addingTask.name])
@@ -36,7 +36,7 @@ const AddTaskControl = (props) => {
         <div>
             {
                 props.isAddingTask ?
-                    <div tabIndex="0" onBlur={() => {props.setIsAddingTask(false)}} className="add-form-container">
+                    <div tabIndex="0" onBlur={() => { props.setIsAddingTask(false) }} className="add-form-container">
                         <div className="add-form">
                             <input
                                 ref={addingInputEle}
@@ -81,10 +81,15 @@ const AddTaskControl = (props) => {
                             >Save</button>
                         </div>
                     </div> :
-                    <button className="btn-add-task" onClick={() => {
-                        props.setEdittingTaskId(null)
-                        props.setIsAddingTask(true)
-                    }}>
+                    <button
+                        className={"btn-add-task" 
+                        + (props.tab === "short-break" ? " btn-add-task--short-break" : "")
+                        + (props.tab === "long-break" ? " btn-add-task--long-break" : "")
+                    }
+                        onClick={() => {
+                            props.setEdittingTaskId(null)
+                            props.setIsAddingTask(true)
+                        }}>
                         <PlusCircle strokeWidth="0.22rem" />
                         <span style={{ paddingLeft: "0.5rem", fontWeight: 'bold', fontSize: "1.2rem" }}>Add Task</span>
                     </button>
