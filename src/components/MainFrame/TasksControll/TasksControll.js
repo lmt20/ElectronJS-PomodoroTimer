@@ -5,12 +5,11 @@ import StatisticBar from './StatisticBar/StatisticBar'
 import HeaderControl from './HeaderControl/HeaderControl'
 
 const TasksControll = (props) => {
-    const [currentTaskId, setCurrentTaskId] = useState(1);
     const [isAddingTask, setIsAddingTask] = useState(false);
     const [edittingTaskId, setEdittingTaskId] = useState(null);
     const tasks = props.tasks ? props.tasks : [];
     const clickTaskItemButton = (_id, name) => {
-        setCurrentTaskId(_id)
+        props.setCurrentTaskId(_id)
         props.setStartingNotify(false)
         props.setStatusLabel(name)
     }
@@ -64,7 +63,7 @@ const TasksControll = (props) => {
                             return <TaskItem
                                 key={task._id}
                                 task={task}
-                                isSelecting={task._id === currentTaskId ? "task-item-control--selected" : ""}
+                                isSelecting={task._id === props.currentTaskId ? "task-item-control--selected" : ""}
                                 clickTaskItemButton={clickTaskItemButton}
                                 clickTaskItemIcon={clickTaskItemIcon}
                                 updateTask={updateTask}
@@ -72,6 +71,7 @@ const TasksControll = (props) => {
                                 setEdittingTaskId={setEdittingTaskId}
                                 setIsAddingTask={setIsAddingTask}
                                 deleteTask={deleteTask}
+                                setStatusLabel={props.setStatusLabel}
                             />
 
                         }

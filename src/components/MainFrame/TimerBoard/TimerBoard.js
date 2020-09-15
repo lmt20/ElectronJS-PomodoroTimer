@@ -35,6 +35,17 @@ const TimerBoard = (props) => {
             if(newCurrentTargetTime > 0){
                 return newCurrentTargetTime;
             }
+            else{
+                if(props.numInterval < pomodoroSetting.longBreakInterval -1){
+                    props.setNumInterval(props.numInterval + 1)
+                    props.completeCurrentTask()
+                    props.setTab('short-break')
+                }
+                else {
+                    props.setNumInterval(0)
+                    props.setTab('long-break')            
+                }
+            }
         }
         if(type === "short-break"){
             originalTargetTime = originalTime.shortBreakTime;
@@ -43,6 +54,10 @@ const TimerBoard = (props) => {
             let newCurrentTargetTime = newTargetTime * 60 - spannedTime;
             if(newCurrentTargetTime > 0){
                 return newCurrentTargetTime;
+            }
+            else{
+                props.startNextTask()
+                props.setTab('pomo')
             }
         }
         if(type === "long-break"){
@@ -53,12 +68,15 @@ const TimerBoard = (props) => {
             if(newCurrentTargetTime > 0){
                 return newCurrentTargetTime;
             }
+            else{
+                props.startNextTask()
+                props.setTab('pomo')
+            }
         }
-    
 
     }
-    useEffect(() => {
-        console.log(isUpdateInTab())
+
+    useEffect(() => {        
         if(isUpdateInTab()){
             setTimer({
                 ...timer,
@@ -69,7 +87,28 @@ const TimerBoard = (props) => {
         }
         setOriginalTime(pomodoroSetting)
     }, [props.pomodoroSetting])
+    
+    useEffect(() => {
+        switchTab(props.tab)
+    }, [props.tab])
 
+    const handleCountdownDone = () => {
+        if(timer.type === 'pomo'){
+            if(props.numInterval < pomodoroSetting.longBreakInterval -1){
+                props.setNumInterval(props.numInterval + 1)
+                props.completeCurrentTask()
+                props.setTab('short-break')
+            }
+            else {
+                props.setNumInterval(0)
+                props.setTab('long-break')            
+            }
+        }
+        else if(timer.type === 'short-break' || timer.type === 'long-break'){
+            props.startNextTask()
+            props.setTab('pomo')
+        }
+    }
     useEffect(() => {
         if (isRunning) {
             timeoutID.current = setTimeout(() => {
@@ -84,6 +123,9 @@ const TimerBoard = (props) => {
                         ...timer,
                         seconds: timer.seconds - 1,
                     })
+                }
+                if(timer.minutes === 0 && timer.seconds === 0){
+                    handleCountdownDone()
                 }
             }, 1000)
         }

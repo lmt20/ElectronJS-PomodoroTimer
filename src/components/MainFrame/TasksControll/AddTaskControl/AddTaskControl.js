@@ -36,7 +36,7 @@ const AddTaskControl = (props) => {
         <div>
             {
                 props.isAddingTask ?
-                    <div tabIndex="0" onBlur={() => { props.setIsAddingTask(false) }} className="add-form-container">
+                    <div className="add-form-container">
                         <div className="add-form">
                             <input
                                 ref={addingInputEle}

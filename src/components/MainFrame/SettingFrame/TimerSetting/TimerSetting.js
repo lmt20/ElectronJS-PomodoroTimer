@@ -120,7 +120,7 @@ const TimerSetting = (props) => {
                             <option value="last">Last</option>
                             <option value="every">Every</option>
                         </select>
-                        <input type="number" step={1} value="5"></input>
+                        <input type="number" step={1} value="5" onChange={() => {}}></input>
                         <p style={{ marginLeft: '0.5rem', color: '#222', fontWeight: 'normal' }}> min</p>
                     </div>
                 </div>
