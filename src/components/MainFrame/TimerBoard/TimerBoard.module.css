@@ -41,3 +41,25 @@
 .btn-text__long-break--color {
     color: #498FC1;
 }
+
+
+/* style timespan progress bar  */
+.time-progress-bar {
+    position: relative;
+    width: 100%;
+    height: 0.2rem;
+    border-radius: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.time-progress-bar div{
+    position: absolute;
+    width: 27.2%;
+    height: 0.7rem;
+    top: -0.33rem;
+    border-radius: 0.5rem;
+    background-color: white;
+}
+.time-progress-bar--hidden {
+    display: none;
+}

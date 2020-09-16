@@ -33,7 +33,6 @@ const MainFrame = () => {
     const [isTimeStopping, setIsTimeStopping] = useState(true)
     const [autoContinue, setAutoContinue] = useState(false)
     const getValueOfStatisticBar = () => {
-        console.log("okkoko")
         let unCompletedTasksNum = 0; 
         let unCompletedIntervalsNum = 0;
         let estCompleteTime = Date.now();

@@ -180,8 +180,16 @@ const TimerBoard = (props) => {
             }
         }
     }
+
+    //get %time span
+    const getPercentTimeSpan = () => {
+        return Math.floor((1-(timer.minutes*60 + timer.seconds)/(getCurrentSettingTime()*60)) * 10000)/100
+    }
     return (
         <React.Fragment>
+            <div className={isRunning ? "time-progress-bar" : "time-progress-bar--hidden "}>
+                <div style={{width: getPercentTimeSpan()+"%"}}></div>
+            </div>
             <div className={"time-board" + (timer.type === 'short-break' ? " timerboard-background__short-break--color" : "")
             + (timer.type === 'long-break' ? " timerboard-background__long-break--color" : "")
         }>
