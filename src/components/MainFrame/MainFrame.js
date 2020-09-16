@@ -58,6 +58,7 @@ const MainFrame = () => {
     const [currentTaskId, setCurrentTaskId] = useState(1);
     const [timePast, setTimePast] = useState(0)
     const [isTimeStopping, setIsTimeStopping] = useState(true)
+    const [autoContinue, setAutoContinue] = useState(false)
     const completeCurrentTask = () => {
         //complete old task
         const completedTaskIndex = tasks.findIndex(task => {
@@ -98,6 +99,8 @@ const MainFrame = () => {
                 <NavigationBar tab={tab}
                  pomodoroSetting={pomodoroSetting} setPomodoroSetting={setPomodoroSetting}
                  setChangedSetting={setChangedSetting}
+                 autoContinue={autoContinue}
+                 setAutoContinue={setAutoContinue}
                  />
                 <TimerBoard 
                     statusLabel={statusLabel} 
@@ -112,6 +115,8 @@ const MainFrame = () => {
                     startNextTask={startNextTask}
                     numInterval={numInterval}
                     setNumInterval={setNumInterval}
+                    autoContinue={autoContinue}
+                    setAutoContinue={setAutoContinue}
                     // currentStatus={currentStatus}
                     // setCurrentStatus={setCurrentStatus}
                     isTimeStopping={isTimeStopping}

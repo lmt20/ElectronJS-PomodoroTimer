@@ -25,7 +25,11 @@ const BarButton = (props) => {
                 setPomodoroSetting={props.setPomodoroSetting}
                 setChangedSetting={props.setChangedSetting}
                 isDisplaySetting={isDisplaySetting}
-                setIsDisplaySetting={setIsDisplaySetting}></SettingFrame> : ""}
+                setIsDisplaySetting={setIsDisplaySetting}
+                autoContinue={props.autoContinue}
+                setAutoContinue={props.setAutoContinue}
+                ></SettingFrame> : ""}
+
         </React.Fragment>
     )
 }

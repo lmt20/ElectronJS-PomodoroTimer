@@ -62,14 +62,15 @@
     outline: none;
 }
 .checkbox-icon {
-        display: inline-block;
-        width: 4.2rem;
-        height: 2.1rem;
-        border-radius: 2.1rem;
-        background-color: rgb(204, 204, 204);
+    display: flex;
+    justify-content: flex-start;
+    width: 4.2rem;
+    height: 2.1rem;
+    border-radius: 2.1rem;
+    background-color: rgb(204, 204, 204);
 }
 .checkbox-icon div {
-    display: inline-block;
+    /* display: inline-block; */
     width: 1.9rem;
     height: 1.9rem;
     margin: 0.1rem;
@@ -148,4 +149,9 @@
   }
   .btn-container-timer-setting button:active {
     outline: none;
+  }
+
+  .checkbox-icon-toggle-on {
+    background-color: rgba(132, 199, 51, 0.8);
+    justify-content: flex-end;
   }

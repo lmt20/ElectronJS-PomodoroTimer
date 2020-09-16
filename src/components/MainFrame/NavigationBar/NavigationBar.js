@@ -22,7 +22,10 @@ const NavigationBar = (props) => {
                 setChangedSetting={props.setChangedSetting}
                 tab={props.tab} 
                 icon={<Settings size="1rem" />} 
-                name="Setting"></BarButton >
+                name="Setting"
+                autoContinue={props.autoContinue}
+                setAutoContinue={props.setAutoContinue}
+                ></BarButton >
                 <BarButton 
                 tab={props.tab} 
                 icon={<User size="1rem" />} 

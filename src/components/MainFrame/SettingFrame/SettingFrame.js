@@ -24,6 +24,8 @@ const SettingFrame = (props) => {
                 setPomodoroSetting={props.setPomodoroSetting}
                 pomodoroSetting={props.pomodoroSetting}
                 setChangedSetting={props.setChangedSetting}
+                autoContinue={props.autoContinue}
+                setAutoContinue={props.setAutoContinue}
                 >   
     
                 </TimerSetting>

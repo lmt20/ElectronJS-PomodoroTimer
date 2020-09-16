@@ -83,7 +83,12 @@ const TimerSetting = (props) => {
                 </div>
                 <div className='edit-item-container edit-items'>
                     <h3 style={{ marginBottom: '0.3rem' }}>Auto start next round?</h3>
-                    <div className="checkbox-icon">
+                    <div 
+                        className={"checkbox-icon" + (props.autoContinue ? " checkbox-icon-toggle-on" : "")} 
+                        onClick={() => {
+                            props.setAutoContinue(!props.autoContinue)
+                        }}
+                    >
                         <div>
 
                         </div>

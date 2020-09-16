@@ -138,7 +138,7 @@ const TimerBoard = (props) => {
         if (type !== timer.type) {
             if (type === 'short-break') {
                 props.setTab('short-break')
-                setIsRunning(false)
+                if(!props.autoContinue) setIsRunning(false)
                 setTimer({
                     type,
                     beginTime: Date.now(),
@@ -148,7 +148,7 @@ const TimerBoard = (props) => {
             }
             else if (type === 'long-break') {
                 props.setTab('long-break')
-                setIsRunning(false)
+                if(!props.autoContinue) setIsRunning(false)
                 setTimer({
                     type,
                     beginTime: Date.now(),
@@ -158,7 +158,7 @@ const TimerBoard = (props) => {
             }
             if (type === 'pomo') {
                 props.setTab('pomo')
-                setIsRunning(false)
+                if(!props.autoContinue) setIsRunning(false)
                 setTimer({
                     type,
                     beginTime: Date.now(),
