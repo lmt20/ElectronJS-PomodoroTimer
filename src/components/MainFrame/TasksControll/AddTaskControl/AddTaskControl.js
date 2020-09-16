@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { ipcRenderer } from 'electron'
 import { PlusCircle } from 'react-feather'
 import { ChevronUp } from 'react-feather'
 import { ChevronDown } from 'react-feather'
@@ -24,13 +25,18 @@ const AddTaskControl = (props) => {
         setAddingTask({ ...addingTask, settedIntervalNum })
     }
     const saveAddingTask = () => {
-        const createdNewTask = { ...addingTask }
-        createdNewTask._id = Math.floor(Math.random() * 100000)
-        createdNewTask.isCompleted = false
-        createdNewTask.isDisplayed = true
-        createdNewTask.completedIntervalNum = 0
         setAddingTask({ name: "", settedIntervalNum: 1 })
-        props.setTasks([...props.tasks, createdNewTask])
+        //send adding task data to MainProcess
+        ipcRenderer.invoke('tasks:add-task', JSON.stringify(addingTask))
+        ipcRenderer.on('tasks:add-success', (e, data) => {
+            try {
+                const addedTask = JSON.parse(data)
+                // console.log(addedTask)
+                props.setTasks([...props.tasks, addedTask])
+            } catch (error) {
+                console.log(error)
+            }
+        })
     }
     return (
         <div>
@@ -82,10 +88,10 @@ const AddTaskControl = (props) => {
                         </div>
                     </div> :
                     <button
-                        className={"btn-add-task" 
-                        + (props.tab === "short-break" ? " btn-add-task--short-break" : "")
-                        + (props.tab === "long-break" ? " btn-add-task--long-break" : "")
-                    }
+                        className={"btn-add-task"
+                            + (props.tab === "short-break" ? " btn-add-task--short-break" : "")
+                            + (props.tab === "long-break" ? " btn-add-task--long-break" : "")
+                        }
                         onClick={() => {
                             props.setEdittingTaskId(null)
                             props.setIsAddingTask(true)

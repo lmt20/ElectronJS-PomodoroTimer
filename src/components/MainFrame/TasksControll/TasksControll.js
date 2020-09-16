@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {ipcRenderer} from 'electron'
 import TaskItem from './TaskItem/TaskItem'
 import AddTaskControl from './AddTaskControl/AddTaskControl'
 import StatisticBar from './StatisticBar/StatisticBar'
@@ -8,20 +9,25 @@ const TasksControll = (props) => {
     const [isAddingTask, setIsAddingTask] = useState(false);
     const [edittingTaskId, setEdittingTaskId] = useState(null);
     const tasks = props.tasks ? props.tasks : [];
+    //select current task
     const clickTaskItemButton = (_id, name) => {
         props.setCurrentTaskId(_id)
         props.setStartingNotify(false)
         props.setStatusLabel(name)
     }
+    //toggle completed - uncompleted
     const clickTaskItemIcon = (_id) => {
-        const taskIndex = tasks.findIndex(task => {
-            return task._id === _id;
+        //send completed taskid message to main
+        ipcRenderer.invoke('tasks:completed-task', _id)
+        ipcRenderer.on('tasks:completed-task-success', () => {
+            const taskIndex = tasks.findIndex(task => {
+                return task._id === _id;
+            })
+            const task = { ...tasks[taskIndex], isCompleted: !tasks[taskIndex].isCompleted };
+            const newTasks = [...tasks];
+            newTasks[taskIndex] = task;
+            props.setTasks(newTasks)
         })
-        const task = { ...tasks[taskIndex], isCompleted: !tasks[taskIndex].isCompleted };
-        const newTasks = [...tasks];
-
-        newTasks[taskIndex] = task;
-        props.setTasks(newTasks)
     }
 
 
@@ -30,27 +36,36 @@ const TasksControll = (props) => {
             return task._id === _id;
         })
         const task = { ...tasks[taskIndex], name, settedIntervalNum };
-        const newTasks = [...tasks];
-        newTasks[taskIndex] = task;
-        props.setTasks(newTasks)
+        ipcRenderer.invoke('tasks:update-task', JSON.stringify(task))   
+        ipcRenderer.on('tasks:update-success', () => {
+            const newTasks = [...tasks];
+            newTasks[taskIndex] = task;
+            props.setTasks(newTasks)
+        }) 
     }
     const deleteTask = (_id) => {
-        const newTasks = tasks.filter(task => {
-            return task._id !== _id;
+        ipcRenderer.invoke('tasks:delete-task', _id)
+        ipcRenderer.on('tasks:delete-success', () => {
+            const newTasks = tasks.filter(task => {
+                return task._id !== _id;
+            })
+            props.setTasks(newTasks);
         })
-        props.setTasks(newTasks);
     }
     const clearFinishedTasks = () => {
-        const newTasks = tasks.map(task => {
-            if(task.isCompleted){
-                const newTask = {...task, isDisplayed: false}
-                return newTask;
-            }
-            else{
-                return task;
-            }
+        ipcRenderer.invoke('tasks:clear-finished-task')
+        ipcRenderer.on('tasks:clear-finished-task-success', () => {
+            const newTasks = tasks.map(task => {
+                if(task.isCompleted){
+                    const newTask = {...task, isDisplayed: false}
+                    return newTask;
+                }
+                else{
+                    return task;
+                }
+            })
+            props.setTasks(newTasks);
         })
-        props.setTasks(newTasks);
     }
     return (
         <div>
@@ -89,7 +104,7 @@ const TasksControll = (props) => {
                 setEdittingTaskId={setEdittingTaskId}
                 tab={props.tab}
             />
-            <StatisticBar tab={props.tab} />
+            <StatisticBar tab={props.tab} statisticBar={props.statisticBar}/>
             <p>&nbsp;</p>
         </div>
     )

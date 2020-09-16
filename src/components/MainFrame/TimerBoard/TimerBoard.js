@@ -76,6 +76,11 @@ const TimerBoard = (props) => {
 
     }
 
+    const getCurrentSettingTime = () => {
+        if(timer.type === "pomo") return pomodoroSetting.pomoTime;
+        if(timer.type === "short-break") return pomodoroSetting.shortBreakTime;
+        if(timer.type === "long-break") return pomodoroSetting.longBreakTime;
+    }
     useEffect(() => {        
         if(isUpdateInTab()){
             setTimer({
@@ -83,6 +88,13 @@ const TimerBoard = (props) => {
                 beginTime: Date.now(),
                 minutes: Math.floor(getTargetTime(timer.type)/60),
                 seconds: getTargetTime(timer.type) % 60
+            })
+        } else {
+            setTimer({
+                ...timer,
+                beginTime: Date.now(),
+                minutes: getCurrentSettingTime(),
+                seconds: 0
             })
         }
         setOriginalTime(pomodoroSetting)
