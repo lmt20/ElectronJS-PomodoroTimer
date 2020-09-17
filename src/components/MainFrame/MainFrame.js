@@ -32,6 +32,8 @@ const MainFrame = () => {
     const [timePast, setTimePast] = useState(0)
     const [isTimeStopping, setIsTimeStopping] = useState(true)
     const [autoContinue, setAutoContinue] = useState(false)
+    const [isLogin, setIsLogin] = useState(false)
+    const [userId, setUserId] = useState(null)
     const getValueOfStatisticBar = () => {
         let unCompletedTasksNum = 0; 
         let unCompletedIntervalsNum = 0;
@@ -146,6 +148,8 @@ const MainFrame = () => {
                     setChangedSetting={setChangedSetting}
                     autoContinue={autoContinue}
                     setAutoContinue={setAutoContinue}
+                    userId={userId}
+                    setUserId={setUserId}
                 />
                 <TimerBoard
                     statusLabel={statusLabel}

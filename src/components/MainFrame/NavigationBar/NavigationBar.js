@@ -29,7 +29,9 @@ const NavigationBar = (props) => {
                 <BarButton 
                 tab={props.tab} 
                 icon={<User size="1rem" />} 
-                name="Login"></BarButton>
+                name="Login"
+                setUserId={props.setUserId}
+                ></BarButton>
             </span>
         </div>
     )

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const PomoSetting = require('./src/models/PomoSetting');
 const Task = require('./src/models/Task');
+const User = require('./src/models/User');
 connectDB()
 
 let mainWindow
@@ -158,7 +159,48 @@ ipcMain.handle('tasks:completed-task', async (e, _taskId) => {
 		console.log(error)
 	}
 })
-
+//handle create new user
+ipcMain.handle('users:create-user', async (e, newUserData) => {
+	try {
+		const newUser = JSON.parse(newUserData)
+		let existedUser = await User.find({userName: newUser.userName})
+		if(existedUser.length > 0 ) {
+			return mainWindow.webContents.send('users:error-create-user', "This username is existed, please choose another usename!")
+		}
+		existedUser = await User.find({mail: newUser.mail})
+		if(existedUser.length > 0 ) {
+			return mainWindow.webContents.send('users:error-create-user', "This mail is existed, please choose another mail!")
+		}
+		await User.create(newUser, (err, data) => {
+			if (!err) {
+				mainWindow.webContents.send('users:complete-create-user', JSON.stringify(data._id))
+			}
+			else{
+				console.log(err)
+			}
+		})
+	} catch (error) {
+		console.log(error)
+	}
+})
+//handle user login request
+ipcMain.handle('users:login-user', async (e, userLoginData) => {
+	try {
+		const userLogin = JSON.parse(userLoginData);
+		const user = await User.findOne({userName: userLogin.userName})
+		if(!user){
+			return mainWindow.webContents.send('users:error-login-user', "Username doesn't exist, please check again!")
+		}
+		else if(user.password !== userLogin.password){
+			return mainWindow.webContents.send('users:error-login-user', "Your Password doesn't correct, please check again!")
+		} 
+		else {
+			return mainWindow.webContents.send('users:success-login-user', JSON.stringify(user._id))
+		}
+	} catch (error) {
+		console.log(error)
+	}
+})
 
 
 
