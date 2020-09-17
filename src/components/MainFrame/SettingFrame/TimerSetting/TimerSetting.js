@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {ipcRenderer} from 'electron'
 import { X } from 'react-feather'
 import './TimerSetting.module.css'
 
@@ -35,14 +36,23 @@ const TimerSetting = (props) => {
         const isPomoTimeSettingChanged = originalPomodoroSetting.pomoTime !== pomodoroSetting.pomoTime;
         const isShortBreakTimeSettingChanged = originalPomodoroSetting.shortBreakTime !== pomodoroSetting.shortBreakTime;
         const isLongBreakTimeSettingChanged = originalPomodoroSetting.longBreakTime !== pomodoroSetting.longBreakTime;
-        props.setChangedSetting({
-            pomoTime: isPomoTimeSettingChanged,
-            shortBreakTime: isShortBreakTimeSettingChanged,
-            longBreakTime: isLongBreakTimeSettingChanged
-        })
 
-        props.setPomodoroSetting({ ...pomodoroSetting })
-        props.setIsDisplaySetting(false)
+        //send request to ipcMain
+        ipcRenderer.invoke('setting:update', JSON.stringify({
+            pomodoroSetting: pomodoroSetting,
+            user: props.user
+        }))   
+        ipcRenderer.on('setting:update-success', () => {
+            props.setChangedSetting({
+                pomoTime: isPomoTimeSettingChanged,
+                shortBreakTime: isShortBreakTimeSettingChanged,
+                longBreakTime: isLongBreakTimeSettingChanged
+            })
+            props.setPomodoroSetting({ ...pomodoroSetting })
+            props.setIsDisplaySetting(false)
+        }) 
+
+
     }
     return (
         <div className={"timer-setting"}>

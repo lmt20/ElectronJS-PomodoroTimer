@@ -33,7 +33,7 @@ const MainFrame = () => {
     const [isTimeStopping, setIsTimeStopping] = useState(true)
     const [autoContinue, setAutoContinue] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
-    const [userId, setUserId] = useState(null)
+    const [user, setUser] = useState({username: "", _id: ""})
     const getValueOfStatisticBar = () => {
         let unCompletedTasksNum = 0; 
         let unCompletedIntervalsNum = 0;
@@ -62,8 +62,9 @@ const MainFrame = () => {
             estCompleteTime: targetTimePoint.getHours()+":"+targetTimePoint.getMinutes(),
         })
     }
+    // Initial data when start
     useEffect(() => {
-        ipcRenderer.invoke('tasks:load')
+        ipcRenderer.invoke('tasks:load', JSON.stringify(user))
         ipcRenderer.on('tasks:getAll', (e, tasks) => {
             let tasksArr;
             try {
@@ -81,13 +82,45 @@ const MainFrame = () => {
             }
         })
     }, [])
+    // Updata data when login (change user)
+    useEffect(() => {
+        //upadate Tasks
+        ipcRenderer.invoke('tasks:load', JSON.stringify(user))
+        ipcRenderer.on('tasks:getAll', (e, tasks) => {
+            let tasksArr;
+            try {
+                tasksArr = JSON.parse(tasks);
+                setTasks(tasksArr)
+                //set initial current task
+                for (const task of tasksArr) {
+                    if (!task.isCompleted) {
+                        setCurrentTaskId(task._id);
+                        break;
+                    }
+                }
+            } catch (error) {
+                tasksArr = [];
+            }
+        })
+        //Update setting
+        ipcRenderer.invoke('setting:load', JSON.stringify(user))
+        ipcRenderer.on('setting:get', (e, setting) => {
+            let currentPomoSetting;
+            try {
+                currentPomoSetting = JSON.parse(setting);
+                setPomodoroSetting(currentPomoSetting)
+            } catch (error) {
+                tasksArr = [];
+            }
+        })
+    }, [user])
     useEffect(() => {
         getValueOfStatisticBar()
     }, [tasks, pomodoroSetting, numInterval])
     //initial setting state
 
     useEffect(() => {
-        ipcRenderer.invoke('setting:load')
+        ipcRenderer.invoke('setting:load', JSON.stringify(user))
         ipcRenderer.on('setting:get', (e, setting) => {
             let currentPomoSetting;
             try {
@@ -148,8 +181,10 @@ const MainFrame = () => {
                     setChangedSetting={setChangedSetting}
                     autoContinue={autoContinue}
                     setAutoContinue={setAutoContinue}
-                    userId={userId}
-                    setUserId={setUserId}
+                    user={user}
+                    isLogin={isLogin}
+                    setIsLogin={setIsLogin}
+                    setUser={setUser}
                 />
                 <TimerBoard
                     statusLabel={statusLabel}
@@ -180,6 +215,7 @@ const MainFrame = () => {
                     currentTaskId={currentTaskId}
                     setCurrentTaskId={setCurrentTaskId}
                     statisticBar={statisticBar}
+                    user={user}
                 />
             </div>
         </div>

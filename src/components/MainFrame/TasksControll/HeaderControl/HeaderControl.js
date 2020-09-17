@@ -44,7 +44,10 @@ const HeaderControl = (props) => {
             </span>
             <div ref={moreAreaControlEle} className={"header-option" + (isDisplayMoreOption ? "" : " header-option-hide")}>
                 <div style={{ margin: "0.5rem 0" }}>
-                    <div onClick = {() => props.clearFinishedTasks()}>
+                    <div onClick = {() => {
+                        setIsDisplayMoreOption(false)
+                        props.clearFinishedTasks()
+                        }}>
                         <Check size="1rem" strokeWidth="0.3rem" />
                         &nbsp;Clear finished
                     </div>

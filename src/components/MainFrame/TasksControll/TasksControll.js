@@ -18,7 +18,10 @@ const TasksControll = (props) => {
     //toggle completed - uncompleted
     const clickTaskItemIcon = (_id) => {
         //send completed taskid message to main
-        ipcRenderer.invoke('tasks:completed-task', _id)
+        ipcRenderer.invoke('tasks:completed-task', JSON.stringify({
+            user: props.user,
+            toggleTaskId: _id
+        }))
         ipcRenderer.on('tasks:completed-task-success', () => {
             const taskIndex = tasks.findIndex(task => {
                 return task._id === _id;
@@ -36,7 +39,10 @@ const TasksControll = (props) => {
             return task._id === _id;
         })
         const task = { ...tasks[taskIndex], name, settedIntervalNum };
-        ipcRenderer.invoke('tasks:update-task', JSON.stringify(task))   
+        ipcRenderer.invoke('tasks:update-task', JSON.stringify({
+            user:  props.user,
+            updatedTask: task
+        }))   
         ipcRenderer.on('tasks:update-success', () => {
             const newTasks = [...tasks];
             newTasks[taskIndex] = task;
@@ -44,7 +50,10 @@ const TasksControll = (props) => {
         }) 
     }
     const deleteTask = (_id) => {
-        ipcRenderer.invoke('tasks:delete-task', _id)
+        ipcRenderer.invoke('tasks:delete-task',JSON.stringify({
+            user:  props.user,
+            deletedTaskId: _id
+        }))
         ipcRenderer.on('tasks:delete-success', () => {
             const newTasks = tasks.filter(task => {
                 return task._id !== _id;
@@ -53,7 +62,9 @@ const TasksControll = (props) => {
         })
     }
     const clearFinishedTasks = () => {
-        ipcRenderer.invoke('tasks:clear-finished-task')
+        ipcRenderer.invoke('tasks:clear-finished-task', JSON.stringify({
+            user:  props.user
+        }))
         ipcRenderer.on('tasks:clear-finished-task-success', () => {
             const newTasks = tasks.map(task => {
                 if(task.isCompleted){
@@ -103,6 +114,7 @@ const TasksControll = (props) => {
                 setTasks={props.setTasks}
                 setEdittingTaskId={setEdittingTaskId}
                 tab={props.tab}
+                user={props.user}
             />
             <StatisticBar tab={props.tab} statisticBar={props.statisticBar}/>
             <p>&nbsp;</p>

@@ -187,7 +187,7 @@ const TimerBoard = (props) => {
     }
     return (
         <React.Fragment>
-            <div className={isRunning ? "time-progress-bar" : "time-progress-bar--hidden "}>
+            <div className={isRunning ? "time-progress-bar" : "time-progress-bar--hidden"}>
                 <div style={{width: getPercentTimeSpan()+"%"}}></div>
             </div>
             <div className={"time-board" + (timer.type === 'short-break' ? " timerboard-background__short-break--color" : "")

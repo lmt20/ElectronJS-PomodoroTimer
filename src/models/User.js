@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const UserSchma = new Schema({
+const UserSchema = new Schema({
     userName: {
         type: String,
         trim: true,
@@ -16,10 +16,33 @@ const UserSchma = new Schema({
         trim: true,
         required: [true, 'Password is required']
     },
+    tasks: [
+        {
+            type: Schema.Types.ObjectId,
+            required: true,
+            ref: 'Task'
+        }
+
+    ],
+    setting: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'PomoSetting'
+    },
     created: {
         type: Date,
         default: Date.now()
     },
 })
-
-module.exports = mongoose.model('user', UserSchma);
+UserSchema.methods.addTask = function (taskId) {
+    this.tasks.push(taskId)
+    return this.save();
+}
+UserSchema.methods.deleteTask = function (taskId) {
+    const taskIndex = this.tasks.findIndex(task => {
+        return taskId.toString() === task._id.toString();
+    })
+    this.tasks.splice(taskIndex, 1)
+    return this.save();
+}
+module.exports = mongoose.model('User', UserSchema);

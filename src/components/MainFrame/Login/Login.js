@@ -15,6 +15,8 @@ const Login = (props) => {
         function handleClickOutside(event) {
             if (loginRef.current && !loginRef.current.contains(event.target)) {
                 props.setIsDisplayLogin(false)
+                setInvalidAccountMessage("")
+                props.setIsSignupSuccess(false)
             }
         }
         if (props.isDisplayLogin) {
@@ -55,9 +57,12 @@ const Login = (props) => {
             password: user.password
         }))
         //handle if login success
-        ipcRenderer.on('users:success-login-user', (e, userId) => {
-            props.setUserId(JSON.parse(userId))
+        ipcRenderer.on('users:success-login-user', (e, user) => {
+            props.setUser(JSON.parse(user))
             props.setIsDisplayLogin(false)
+            setInvalidAccountMessage("")
+            props.setIsSignupSuccess(false)
+            props.setIsLogin(true)
         })
         //handle error message when login failed
         ipcRenderer.on('users:error-login-user', (e, message) => {

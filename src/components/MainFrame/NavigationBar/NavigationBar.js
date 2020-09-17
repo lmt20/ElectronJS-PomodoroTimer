@@ -13,25 +13,31 @@ const NavigationBar = (props) => {
             <a className="icon-header-area"><CheckCircle /> <span className="header-text"> Pomofocus</span></a>
             <span>
                 <BarButton 
-                tab={props.tab} 
-                icon={<BarChart2 size="1rem" />}
-                 name="Report"></BarButton>
+                    tab={props.tab} 
+                    icon={<BarChart2 size="1rem" />}
+                    name="Report"
+                    type="Report"
+                />
                 <BarButton 
-                pomodoroSetting={props.pomodoroSetting}
-                setPomodoroSetting={props.setPomodoroSetting}
-                setChangedSetting={props.setChangedSetting}
-                tab={props.tab} 
-                icon={<Settings size="1rem" />} 
-                name="Setting"
-                autoContinue={props.autoContinue}
-                setAutoContinue={props.setAutoContinue}
-                ></BarButton >
+                    pomodoroSetting={props.pomodoroSetting}
+                    setPomodoroSetting={props.setPomodoroSetting}
+                    setChangedSetting={props.setChangedSetting}
+                    tab={props.tab} 
+                    icon={<Settings size="1rem" />} 
+                    name="Setting"
+                    type="Setting"
+                    autoContinue={props.autoContinue}
+                    setAutoContinue={props.setAutoContinue}
+                    user={props.user}
+                />
                 <BarButton 
-                tab={props.tab} 
-                icon={<User size="1rem" />} 
-                name="Login"
-                setUserId={props.setUserId}
-                ></BarButton>
+                    tab={props.tab} 
+                    icon={<User size="1rem" />} 
+                    name={props.isLogin ? props.user.userName : "Login"}
+                    type="Login"
+                    setUser={props.setUser}
+                    setIsLogin={props.setIsLogin}
+                />
             </span>
         </div>
     )

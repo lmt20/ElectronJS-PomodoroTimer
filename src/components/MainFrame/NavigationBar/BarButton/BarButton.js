@@ -10,10 +10,10 @@ const BarButton = (props) => {
     const [isDisplaySignup, setIsDisplaySignup] = useState(false)
     const [isSignupSuccess, setIsSignupSuccess] = useState(false)
     const clickBtn = () => {
-        if (props.name === "Setting" && !isDisplaySetting) {
+        if (props.type === "Setting" && !isDisplaySetting) {
             setIsDisplaySetting(true)
         }
-        else if (props.name === "Login" && !isDisplayLogin) {
+        else if (props.type === "Login" && !isDisplayLogin) {
             setIsDisplayLogin(true)
         }
     }
@@ -36,13 +36,16 @@ const BarButton = (props) => {
                 setIsDisplaySetting={setIsDisplaySetting}
                 autoContinue={props.autoContinue}
                 setAutoContinue={props.setAutoContinue}
+                user={props.user}
                 ></SettingFrame> : ""}
             {isDisplayLogin ? <Login
                 isDisplayLogin={isDisplayLogin}
                 setIsDisplayLogin={setIsDisplayLogin}
                 setIsDisplaySignup={setIsDisplaySignup}
-                setUserId={props.setUserId}
+                setUser={props.setUser}
                 isSignupSuccess={isSignupSuccess}
+                setIsSignupSuccess={setIsSignupSuccess}
+                setIsLogin={props.setIsLogin}
              /> : ""}
             {isDisplaySignup ? <Signup
                 isDisplaySignup={isDisplaySignup}

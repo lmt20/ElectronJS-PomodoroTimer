@@ -27,4 +27,4 @@ const PomoSettingSchema = new Schema({
     },
 })
 
-module.exports = mongoose.model('pomo_setting', PomoSettingSchema);
+module.exports = mongoose.model('Pomosetting', PomoSettingSchema);

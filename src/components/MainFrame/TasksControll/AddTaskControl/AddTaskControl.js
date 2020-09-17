@@ -27,7 +27,10 @@ const AddTaskControl = (props) => {
     const saveAddingTask = () => {
         setAddingTask({ name: "", settedIntervalNum: 1 })
         //send adding task data to MainProcess
-        ipcRenderer.invoke('tasks:add-task', JSON.stringify(addingTask))
+        ipcRenderer.invoke('tasks:add-task', JSON.stringify({
+            user: props.user,
+            addingTask: addingTask
+        }))
         ipcRenderer.on('tasks:add-success', (e, data) => {
             try {
                 const addedTask = JSON.parse(data)
