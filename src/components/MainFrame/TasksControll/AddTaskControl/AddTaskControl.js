@@ -27,19 +27,31 @@ const AddTaskControl = (props) => {
     const saveAddingTask = () => {
         setAddingTask({ name: "", settedIntervalNum: 1 })
         //send adding task data to MainProcess
-        ipcRenderer.invoke('tasks:add-task', JSON.stringify({
-            user: props.user,
-            addingTask: addingTask
-        }))
-        ipcRenderer.on('tasks:add-success', (e, data) => {
-            try {
-                const addedTask = JSON.parse(data)
-                // console.log(addedTask)
-                props.setTasks([...props.tasks, addedTask])
-            } catch (error) {
-                console.log(error)
-            }
-        })
+        //logined
+        if (props.user._id !== "") {
+            ipcRenderer.invoke('tasks:add-task', JSON.stringify({
+                user: props.user,
+                addingTask: addingTask
+            }))
+            ipcRenderer.on('tasks:add-success', (e, data) => {
+                try {
+                    const addedTask = JSON.parse(data)
+                    // console.log(addedTask)
+                    props.setTasks([...props.tasks, addedTask])
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+        }else {
+            //didn't login
+            addingTask.isCompleted = false;
+            addingTask.isDisplayed = true;
+            addingTask.completedIntervalNum = 0;
+            addingTask.created=new Date();
+            addingTask._id = (Math.floor(Math.random() * 10000000000)).toString();
+            localStorage.setItem('tasks', JSON.stringify([...props.tasks, addingTask]))
+            props.setTasks([...props.tasks, addingTask])
+        }
     }
     return (
         <div>

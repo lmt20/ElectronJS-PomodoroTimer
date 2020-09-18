@@ -33,54 +33,84 @@ const MainFrame = () => {
     const [isTimeStopping, setIsTimeStopping] = useState(true)
     const [autoContinue, setAutoContinue] = useState(false)
     const [isLogin, setIsLogin] = useState(false)
-    const [user, setUser] = useState({username: "", _id: ""})
+    const [user, setUser] = useState({ username: "", _id: "" })
     const getValueOfStatisticBar = () => {
-        let unCompletedTasksNum = 0; 
+        let unCompletedTasksNum = 0;
         let unCompletedIntervalsNum = 0;
         let estCompleteTime = Date.now();
         for (const task of tasks) {
             if (task.isDisplayed) {
-                if(!task.isCompleted){
+                if (!task.isCompleted) {
                     unCompletedTasksNum += 1;
-                    if(task.completedIntervalNum < task.settedIntervalNum){
+                    if (task.completedIntervalNum < task.settedIntervalNum) {
                         unCompletedIntervalsNum += (task.settedIntervalNum - task.completedIntervalNum)
                     }
                 }
             }
         }
         const longBreakNum = Math.floor((unCompletedIntervalsNum - 1) / pomodoroSetting.longBreakInterval) > 0 ?
-        Math.floor((unCompletedIntervalsNum - 1) / pomodoroSetting.longBreakInterval) : 0;
+            Math.floor((unCompletedIntervalsNum - 1) / pomodoroSetting.longBreakInterval) : 0;
         const shortBreakNum = (unCompletedIntervalsNum - longBreakNum - 1) > 0 ?
-        (unCompletedIntervalsNum - longBreakNum - 1)  : 0;
-        estCompleteTime += (unCompletedIntervalsNum*pomodoroSetting.pomoTime 
-        + shortBreakNum*pomodoroSetting.shortBreakTime
-        + longBreakNum*pomodoroSetting.longBreakTime)*60*1000;
+            (unCompletedIntervalsNum - longBreakNum - 1) : 0;
+        estCompleteTime += (unCompletedIntervalsNum * pomodoroSetting.pomoTime
+            + shortBreakNum * pomodoroSetting.shortBreakTime
+            + longBreakNum * pomodoroSetting.longBreakTime) * 60 * 1000;
         const targetTimePoint = new Date(estCompleteTime)
         setStatisticBar({
-            unCompletedTasksNum, 
+            unCompletedTasksNum,
             unCompletedIntervalsNum,
-            estCompleteTime: targetTimePoint.getHours()+":"+targetTimePoint.getMinutes(),
+            estCompleteTime: targetTimePoint.getHours() + ":" + targetTimePoint.getMinutes(),
         })
     }
-    // Initial data when start
     useEffect(() => {
-        ipcRenderer.invoke('tasks:load', JSON.stringify(user))
-        ipcRenderer.on('tasks:getAll', (e, tasks) => {
-            let tasksArr;
-            try {
-                tasksArr = JSON.parse(tasks);
-                setTasks(tasksArr)
-                //set initial current task
-                for (const task of tasksArr) {
-                    if (!task.isCompleted) {
-                        setCurrentTaskId(task._id);
-                        break;
+        // Initial data when start
+        if (user._id !== "") {
+            ipcRenderer.invoke('tasks:load', JSON.stringify(user))
+            //when logined
+            ipcRenderer.on('tasks:getAll', (e, tasks) => {
+                let tasksArr;
+                try {
+                    tasksArr = JSON.parse(tasks);
+                    setTasks(tasksArr)
+                    //set initial current task
+                    for (const task of tasksArr) {
+                        if (!task.isCompleted) {
+                            setCurrentTaskId(task._id);
+                            break;
+                        }
                     }
+                } catch (error) {
+                    tasksArr = [];
                 }
-            } catch (error) {
-                tasksArr = [];
+            })
+            // Initial setting when start
+            ipcRenderer.invoke('setting:load', JSON.stringify(user))
+            //when logined
+            ipcRenderer.on('setting:get', (e, setting) => {
+                let currentPomoSetting;
+                try {
+                    currentPomoSetting = JSON.parse(setting);
+                    setPomodoroSetting(currentPomoSetting)
+                } catch (error) {
+                    console.log(error)
+                }
+            })
+        }
+        else {
+            //when don't login
+            //load data on localstorage
+            //1.load tasks
+            if(localStorage.getItem('tasks')){
+                const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+                setTasks(savedTasks)
             }
-        })
+            //1.load setting
+            if(localStorage.getItem('setting')){
+                const savedSetting = JSON.parse(localStorage.getItem('setting'));
+                setPomodoroSetting(savedSetting)
+            }
+        }
+
     }, [])
     // Updata data when login (change user)
     useEffect(() => {
@@ -117,49 +147,47 @@ const MainFrame = () => {
     useEffect(() => {
         getValueOfStatisticBar()
     }, [tasks, pomodoroSetting, numInterval])
-    //initial setting state
 
-    useEffect(() => {
-        ipcRenderer.invoke('setting:load', JSON.stringify(user))
-        ipcRenderer.on('setting:get', (e, setting) => {
-            let currentPomoSetting;
-            try {
-                currentPomoSetting = JSON.parse(setting);
-                setPomodoroSetting(currentPomoSetting)
-            } catch (error) {
-                tasksArr = [];
-            }
-        })
-    }, [])
-
+    // handle when complete current interval
     const completeCurrentTask = () => {
-        console.log('Comleted task', currentTaskId)
-
         //complete old task
         const completedTaskIndex = tasks.findIndex(task => {
             return task._id === currentTaskId;
         })
+        console.log("done")
+
+
         const updatedTask = {
             ...tasks[completedTaskIndex],
             completedIntervalNum: tasks[completedTaskIndex].completedIntervalNum + 1
         }
-        console.log('Comleted task', updatedTask.name)
+        // console.log(updatedTask)
         if (updatedTask.completedIntervalNum === updatedTask.settedIntervalNum) {
             updatedTask.isCompleted = true;
         }
-        console.log(user, updatedTask)
-        ipcRenderer.invoke('tasks:update-task', JSON.stringify({
-            user: user,
-            updatedTask: updatedTask 
-        }))   
-        ipcRenderer.on('tasks:update-success', () => {
-            console.log("update done")
-
-            const updatedTasks = [...tasks]
-            updatedTasks[completedTaskIndex] = updatedTask
-            setTasks(updatedTasks)
-        }) 
-
+        //logined
+        if (user._id !== "") {
+            ipcRenderer.invoke('tasks:update-task', JSON.stringify({
+                user: user,
+                updatedTask: updatedTask
+            }))
+            ipcRenderer.on('tasks:update-success', () => {
+                const updatedTasks = [...tasks]
+                updatedTasks[completedTaskIndex] = updatedTask
+                setTasks(updatedTasks)
+            })
+        }
+        else {
+            //didn't login
+            try {
+                const updatedTasks = [...tasks]
+                updatedTasks[completedTaskIndex] = updatedTask
+                localStorage.setItem('tasks', JSON.stringify(updatedTask))
+                setTasks(updatedTasks)
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
     const startNextTask = () => {
         //set begin new task
@@ -177,7 +205,7 @@ const MainFrame = () => {
         }
     }
     //initial value of statisticBar label
-    
+
 
     return (
         <div className={"main-container"

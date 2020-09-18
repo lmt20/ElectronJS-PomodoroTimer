@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {ipcRenderer} from 'electron'
+import { ipcRenderer } from 'electron'
 import { X } from 'react-feather'
 import './TimerSetting.module.css'
 
@@ -38,11 +38,21 @@ const TimerSetting = (props) => {
         const isLongBreakTimeSettingChanged = originalPomodoroSetting.longBreakTime !== pomodoroSetting.longBreakTime;
 
         //send request to ipcMain
-        ipcRenderer.invoke('setting:update', JSON.stringify({
-            pomodoroSetting: pomodoroSetting,
-            user: props.user
-        }))   
-        ipcRenderer.on('setting:update-success', () => {
+        if (props.user._id !== "") {
+            ipcRenderer.invoke('setting:update', JSON.stringify({
+                pomodoroSetting: pomodoroSetting,
+                user: props.user
+            }))
+            ipcRenderer.on('setting:update-success', () => {
+                props.setChangedSetting({
+                    pomoTime: isPomoTimeSettingChanged,
+                    shortBreakTime: isShortBreakTimeSettingChanged,
+                    longBreakTime: isLongBreakTimeSettingChanged
+                })
+                props.setPomodoroSetting({ ...pomodoroSetting })
+                props.setIsDisplaySetting(false)
+            })
+        }else {
             props.setChangedSetting({
                 pomoTime: isPomoTimeSettingChanged,
                 shortBreakTime: isShortBreakTimeSettingChanged,
@@ -50,7 +60,8 @@ const TimerSetting = (props) => {
             })
             props.setPomodoroSetting({ ...pomodoroSetting })
             props.setIsDisplaySetting(false)
-        }) 
+            localStorage.setItem('setting', JSON.stringify(pomodoroSetting))
+        }
 
 
     }

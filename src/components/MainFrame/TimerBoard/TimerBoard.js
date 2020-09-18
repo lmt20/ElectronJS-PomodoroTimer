@@ -112,6 +112,7 @@ const TimerBoard = (props) => {
                 props.setTab('short-break')
             }
             else {
+                props.completeCurrentTask()
                 props.setNumInterval(0)
                 props.setTab('long-break')            
             }

@@ -80,8 +80,7 @@ ipcMain.handle('tasks:load', async (e, userData) => {
 		const user = JSON.parse(userData)
 		if (!user._id) {
 			// console.log("NoID",userData)
-			const tasks = await Task.find().sort({ created: 1 });
-			mainWindow.webContents.send('tasks:getAll', JSON.stringify(tasks))
+
 		} else {
 			//find user in db and tasks of user
 			const gettingUser = await User.findById(user._id);
@@ -164,7 +163,7 @@ ipcMain.handle('tasks:update-task', async (e, data) => {
 		data = JSON.parse(data)
 		if (!data.user._id) {
 			//if doesn't login
-
+			// mainWindow.webContents.send('tasks-localstorage:update')
 		} else {
 			//if logined
 			const updatedTask = data.updatedTask
