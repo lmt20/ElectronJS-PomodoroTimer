@@ -133,22 +133,31 @@ const MainFrame = () => {
     }, [])
 
     const completeCurrentTask = () => {
+        console.log('Comleted task', currentTaskId)
+
         //complete old task
         const completedTaskIndex = tasks.findIndex(task => {
             return task._id === currentTaskId;
         })
-        const updateTask = {
+        const updatedTask = {
             ...tasks[completedTaskIndex],
             completedIntervalNum: tasks[completedTaskIndex].completedIntervalNum + 1
         }
-        if (updateTask.completedIntervalNum === updateTask.settedIntervalNum) {
-            updateTask.isCompleted = true;
+        console.log('Comleted task', updatedTask.name)
+        if (updatedTask.completedIntervalNum === updatedTask.settedIntervalNum) {
+            updatedTask.isCompleted = true;
         }
-        ipcRenderer.invoke('tasks:update-task', JSON.stringify(updateTask))   
+        console.log(user, updatedTask)
+        ipcRenderer.invoke('tasks:update-task', JSON.stringify({
+            user: user,
+            updatedTask: updatedTask 
+        }))   
         ipcRenderer.on('tasks:update-success', () => {
-            const updateTasks = [...tasks]
-            updateTasks[completedTaskIndex] = updateTask
-            setTasks(updateTasks)
+            console.log("update done")
+
+            const updatedTasks = [...tasks]
+            updatedTasks[completedTaskIndex] = updatedTask
+            setTasks(updatedTasks)
         }) 
 
     }
