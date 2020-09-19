@@ -86,10 +86,12 @@ const TaskItem = (props) => {
                                 <CheckCircle
                                     color="#fff"
                                     size="2rem"
-                                    style={{ backgroundColor: props.task.isCompleted ? ('#F05B56' )
-                                    : "#DFDFDF", borderRadius: "50%" }}
+                                    style={{
+                                        backgroundColor: props.task.isCompleted ? ('#F05B56')
+                                            : "#DFDFDF", borderRadius: "50%"
+                                    }}
                                     className={"check-circle" + (props.task.isCompleted ? " check-circle--completed" : "")}
-                                     />
+                                />
                             </span>
                             <span className={"task-name" + (props.task.isCompleted ? " text-completed" : "")}>{props.task.name}</span>
                         </div>

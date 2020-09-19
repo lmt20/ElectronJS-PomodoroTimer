@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import { ipcRenderer } from 'electron'
 import { X } from 'react-feather'
 import './TimerSetting.module.css'
 
@@ -6,42 +7,63 @@ const TimerSetting = (props) => {
     const [originalPomodoroSetting, setOriginalPomodoroSetting] = useState(props.pomodoroSetting)
     const [pomodoroSetting, setPomodoroSetting] = useState(props.pomodoroSetting)
     const changeSetting = (e) => {
-        if(e.target.name === 'pomo'){
+        if (e.target.name === 'pomo') {
             setPomodoroSetting({
-                ...pomodoroSetting, 
+                ...pomodoroSetting,
                 pomoTime: +e.target.value
             })
         }
-        else if(e.target.name === 'short-break'){
+        else if (e.target.name === 'short-break') {
             setPomodoroSetting({
-                ...pomodoroSetting, 
+                ...pomodoroSetting,
                 shortBreakTime: +e.target.value
             })
         }
-        else if(e.target.name === 'long-break'){
+        else if (e.target.name === 'long-break') {
             setPomodoroSetting({
-                ...pomodoroSetting, 
+                ...pomodoroSetting,
                 longBreakTime: +e.target.value
             })
         }
-        else if(e.target.name === 'long-break-interval'){
+        else if (e.target.name === 'long-break-interval') {
             setPomodoroSetting({
-                ...pomodoroSetting, 
+                ...pomodoroSetting,
                 longBreakInterval: +e.target.value
             })
-        }   
+        }
     }
     const saveSetting = () => {
         const isPomoTimeSettingChanged = originalPomodoroSetting.pomoTime !== pomodoroSetting.pomoTime;
         const isShortBreakTimeSettingChanged = originalPomodoroSetting.shortBreakTime !== pomodoroSetting.shortBreakTime;
         const isLongBreakTimeSettingChanged = originalPomodoroSetting.longBreakTime !== pomodoroSetting.longBreakTime;
-        props.setChangedSetting({
-            pomoTime: isPomoTimeSettingChanged,
-            shortBreakTime: isShortBreakTimeSettingChanged,
-            longBreakTime: isLongBreakTimeSettingChanged})
 
-        props.setPomodoroSetting({...pomodoroSetting})
-        props.setIsDisplaySetting(false)
+        //send request to ipcMain
+        if (props.user._id !== "") {
+            ipcRenderer.invoke('setting:update', JSON.stringify({
+                pomodoroSetting: pomodoroSetting,
+                user: props.user
+            }))
+            ipcRenderer.on('setting:update-success', () => {
+                props.setChangedSetting({
+                    pomoTime: isPomoTimeSettingChanged,
+                    shortBreakTime: isShortBreakTimeSettingChanged,
+                    longBreakTime: isLongBreakTimeSettingChanged
+                })
+                props.setPomodoroSetting({ ...pomodoroSetting })
+                props.setIsDisplaySetting(false)
+            })
+        }else {
+            props.setChangedSetting({
+                pomoTime: isPomoTimeSettingChanged,
+                shortBreakTime: isShortBreakTimeSettingChanged,
+                longBreakTime: isLongBreakTimeSettingChanged
+            })
+            props.setPomodoroSetting({ ...pomodoroSetting })
+            props.setIsDisplaySetting(false)
+            localStorage.setItem('setting', JSON.stringify(pomodoroSetting))
+        }
+
+
     }
     return (
         <div className={"timer-setting"}>
@@ -57,34 +79,40 @@ const TimerSetting = (props) => {
                     <div className="edit-items">
                         <div>
                             <p>Pomodoro</p>
-                            <input type="number" step={1}
-                            name="pomo"
-                            value={pomodoroSetting.pomoTime} 
-                            onChange={(e) => changeSetting(e) }
+                            <input type="number"
+                                min={1}
+                                step={1}
+                                name="pomo"
+                                value={pomodoroSetting.pomoTime}
+                                onChange={(e) => changeSetting(e)}
                             ></input>
                         </div>
                         <div>
                             <p>Short Break</p>
-                            <input type="number" step={1}
-                            name="short-break"
-                            value={pomodoroSetting.shortBreakTime}
-                            onChange={(e) => changeSetting(e) }
+                            <input type="number"
+                                step={1}
+                                min={1}
+                                name="short-break"
+                                value={pomodoroSetting.shortBreakTime}
+                                onChange={(e) => changeSetting(e)}
                             ></input>
                         </div>
                         <div>
                             <p>Long Break</p>
-                            <input type="number" step={1}
-                            name="long-break"
-                            value={pomodoroSetting.longBreakTime}
-                            onChange={(e) => changeSetting(e) }
+                            <input type="number"
+                                step={1}
+                                min={1}
+                                name="long-break"
+                                value={pomodoroSetting.longBreakTime}
+                                onChange={(e) => changeSetting(e)}
                             ></input>
                         </div>
                     </div>
                 </div>
                 <div className='edit-item-container edit-items'>
                     <h3 style={{ marginBottom: '0.3rem' }}>Auto start next round?</h3>
-                    <div 
-                        className={"checkbox-icon" + (props.autoContinue ? " checkbox-icon-toggle-on" : "")} 
+                    <div
+                        className={"checkbox-icon" + (props.autoContinue ? " checkbox-icon-toggle-on" : "")}
                         onClick={() => {
                             props.setAutoContinue(!props.autoContinue)
                         }}
@@ -104,11 +132,13 @@ const TimerSetting = (props) => {
                 </div>
                 <div className='edit-item-container edit-items'>
                     <h3 style={{ marginBottom: '0.3rem' }}>Long Break interval</h3>
-                    <input type="number" step={1}
+                    <input type="number"
+                        min={1}
+                        step={1}
                         name="long-break-interval"
                         value={pomodoroSetting.longBreakInterval}
-                        onChange={(e) => changeSetting(e) }
-                     ></input>
+                        onChange={(e) => changeSetting(e)}
+                    ></input>
                 </div>
                 <div className='edit-item-container edit-items'>
                     <h3 style={{ marginBottom: '0.3rem' }}>Dark Mode when running</h3>
@@ -125,13 +155,13 @@ const TimerSetting = (props) => {
                             <option value="last">Last</option>
                             <option value="every">Every</option>
                         </select>
-                        <input type="number" step={1} value="5" onChange={() => {}}></input>
+                        <input type="number" step={1} value="5" onChange={() => { }}></input>
                         <p style={{ marginLeft: '0.5rem', color: '#222', fontWeight: 'normal' }}> min</p>
                     </div>
                 </div>
             </div>
             <div className="btn-container-timer-setting">
-                <button onClick={() => saveSetting() }>OK</button>
+                <button onClick={() => saveSetting()}>OK</button>
             </div>
         </div>
     )

@@ -26,6 +26,7 @@ const SettingFrame = (props) => {
                 setChangedSetting={props.setChangedSetting}
                 autoContinue={props.autoContinue}
                 setAutoContinue={props.setAutoContinue}
+                user={props.user}
                 >   
     
                 </TimerSetting>

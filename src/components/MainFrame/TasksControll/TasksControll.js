@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ipcRenderer } from 'electron'
 import TaskItem from './TaskItem/TaskItem'
 import AddTaskControl from './AddTaskControl/AddTaskControl'
 import StatisticBar from './StatisticBar/StatisticBar'
@@ -8,20 +9,41 @@ const TasksControll = (props) => {
     const [isAddingTask, setIsAddingTask] = useState(false);
     const [edittingTaskId, setEdittingTaskId] = useState(null);
     const tasks = props.tasks ? props.tasks : [];
+    //select current task
     const clickTaskItemButton = (_id, name) => {
         props.setCurrentTaskId(_id)
         props.setStartingNotify(false)
         props.setStatusLabel(name)
     }
+    //toggle completed - uncompleted
     const clickTaskItemIcon = (_id) => {
-        const taskIndex = tasks.findIndex(task => {
-            return task._id === _id;
-        })
-        const task = { ...tasks[taskIndex], isCompleted: !tasks[taskIndex].isCompleted };
-        const newTasks = [...tasks];
-
-        newTasks[taskIndex] = task;
-        props.setTasks(newTasks)
+        //send completed taskid message to main
+        if (props.user._id !== "") {
+            //logined
+            ipcRenderer.invoke('tasks:completed-task', JSON.stringify({
+                user: props.user,
+                toggleTaskId: _id
+            }))
+            ipcRenderer.on('tasks:completed-task-success', () => {
+                const taskIndex = tasks.findIndex(task => {
+                    return task._id === _id;
+                })
+                const task = { ...tasks[taskIndex], isCompleted: !tasks[taskIndex].isCompleted };
+                const newTasks = [...tasks];
+                newTasks[taskIndex] = task;
+                props.setTasks(newTasks)
+            })
+        } else {
+            //didn't login
+            const taskIndex = tasks.findIndex(task => {
+                return task._id === _id;
+            })
+            const task = { ...tasks[taskIndex], isCompleted: !tasks[taskIndex].isCompleted };
+            const newTasks = [...tasks];
+            newTasks[taskIndex] = task;
+            localStorage.setItem('tasks', JSON.stringify(newTasks))
+            props.setTasks(newTasks)
+        }
     }
 
 
@@ -30,31 +52,79 @@ const TasksControll = (props) => {
             return task._id === _id;
         })
         const task = { ...tasks[taskIndex], name, settedIntervalNum };
-        const newTasks = [...tasks];
-        newTasks[taskIndex] = task;
-        props.setTasks(newTasks)
+        if (props.user._id !== "") {
+            ipcRenderer.invoke('tasks:update-task', JSON.stringify({
+                user: props.user,
+                updatedTask: task
+            }))
+            ipcRenderer.on('tasks:update-success', () => {
+                const newTasks = [...tasks];
+                newTasks[taskIndex] = task;
+                props.setTasks(newTasks)
+            })
+        }
+        else {
+            const newTasks = [...tasks];
+            newTasks[taskIndex] = task;
+            localStorage.setItem('tasks', JSON.stringify(newTasks))
+            props.setTasks(newTasks)
+        }
+
     }
     const deleteTask = (_id) => {
-        const newTasks = tasks.filter(task => {
-            return task._id !== _id;
-        })
-        props.setTasks(newTasks);
+        if (props.user._id !== "") {
+            ipcRenderer.invoke('tasks:delete-task', JSON.stringify({
+                user: props.user,
+                deletedTaskId: _id
+            }))
+            ipcRenderer.on('tasks:delete-success', () => {
+                const newTasks = tasks.filter(task => {
+                    return task._id !== _id;
+                })
+                props.setTasks(newTasks);
+            })
+        } else {
+            const newTasks = tasks.filter(task => {
+                return task._id !== _id;
+            })
+            localStorage.getItem('tasks', newTasks)
+            props.setTasks(newTasks);
+        }
     }
     const clearFinishedTasks = () => {
-        const newTasks = tasks.map(task => {
-            if(task.isCompleted){
-                const newTask = {...task, isDisplayed: false}
-                return newTask;
-            }
-            else{
-                return task;
-            }
-        })
-        props.setTasks(newTasks);
+        if (props.user._id !== "") {
+            ipcRenderer.invoke('tasks:clear-finished-task', JSON.stringify({
+                user: props.user
+            }))
+            ipcRenderer.on('tasks:clear-finished-task-success', () => {
+                const newTasks = tasks.map(task => {
+                    if (task.isCompleted) {
+                        const newTask = { ...task, isDisplayed: false }
+                        return newTask;
+                    }
+                    else {
+                        return task;
+                    }
+                })
+                props.setTasks(newTasks);
+            })
+        }else {
+            const newTasks = tasks.map(task => {
+                if (task.isCompleted) {
+                    const newTask = { ...task, isDisplayed: false }
+                    return newTask;
+                }
+                else {
+                    return task;
+                }
+            })
+            localStorage.setItem('tasks', newTasks)
+            props.setTasks(newTasks);
+        }
     }
     return (
         <div>
-            <HeaderControl clearFinishedTasks={clearFinishedTasks} tab={props.tab}/>
+            <HeaderControl clearFinishedTasks={clearFinishedTasks} tab={props.tab} />
             <hr />
             <div style={{ margin: "1.3rem 0" }}>
                 {
@@ -88,8 +158,9 @@ const TasksControll = (props) => {
                 setTasks={props.setTasks}
                 setEdittingTaskId={setEdittingTaskId}
                 tab={props.tab}
+                user={props.user}
             />
-            <StatisticBar tab={props.tab} />
+            <StatisticBar tab={props.tab} statisticBar={props.statisticBar} />
             <p>&nbsp;</p>
         </div>
     )

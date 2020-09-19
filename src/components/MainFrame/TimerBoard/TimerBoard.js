@@ -76,6 +76,11 @@ const TimerBoard = (props) => {
 
     }
 
+    const getCurrentSettingTime = () => {
+        if(timer.type === "pomo") return pomodoroSetting.pomoTime;
+        if(timer.type === "short-break") return pomodoroSetting.shortBreakTime;
+        if(timer.type === "long-break") return pomodoroSetting.longBreakTime;
+    }
     useEffect(() => {        
         if(isUpdateInTab()){
             setTimer({
@@ -83,6 +88,13 @@ const TimerBoard = (props) => {
                 beginTime: Date.now(),
                 minutes: Math.floor(getTargetTime(timer.type)/60),
                 seconds: getTargetTime(timer.type) % 60
+            })
+        } else {
+            setTimer({
+                ...timer,
+                beginTime: Date.now(),
+                minutes: getCurrentSettingTime(),
+                seconds: 0
             })
         }
         setOriginalTime(pomodoroSetting)
@@ -100,6 +112,7 @@ const TimerBoard = (props) => {
                 props.setTab('short-break')
             }
             else {
+                props.completeCurrentTask()
                 props.setNumInterval(0)
                 props.setTab('long-break')            
             }
@@ -168,8 +181,16 @@ const TimerBoard = (props) => {
             }
         }
     }
+
+    //get %time span
+    const getPercentTimeSpan = () => {
+        return Math.floor((1-(timer.minutes*60 + timer.seconds)/(getCurrentSettingTime()*60)) * 10000)/100
+    }
     return (
         <React.Fragment>
+            <div className={isRunning ? "time-progress-bar" : "time-progress-bar--hidden"}>
+                <div style={{width: getPercentTimeSpan()+"%"}}></div>
+            </div>
             <div className={"time-board" + (timer.type === 'short-break' ? " timerboard-background__short-break--color" : "")
             + (timer.type === 'long-break' ? " timerboard-background__long-break--color" : "")
         }>
