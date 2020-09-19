@@ -1,9 +1,9 @@
 ## Pomodoro Timer
 <!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
 ![GitHub](https://img.shields.io/npm/v/npm)
-![GitHub repo size](https://img.shields.io/github/repo-size/lmt20/InternshipVietIS)
-![GitHub issues](https://img.shields.io/github/issues/lmt20/InternshipVietIS)
-![GitHub contributors](https://img.shields.io/github/contributors/lmt20/InternshipVietIS)
+![GitHub repo size](https://img.shields.io/github/repo-size/lmt20/ElectronJS-PomodoroTimer)
+![GitHub issues](https://img.shields.io/github/issues/lmt20/ElectronJS-PomodoroTimer)
+![GitHub contributors](https://img.shields.io/github/contributors/lmt20/ElectronJS-PomodoroTimer)
 ![Twitter Follow](https://img.shields.io/twitter/follow/TruongLeManh?style=social)
 
 INTRODUCTION
