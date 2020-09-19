@@ -1,75 +1,39 @@
-## Simple Electron React Boilerplate
+## Pomodoro Timer
+<!--- These are examples. See https://shields.io for others or to customize this set of shields. You might want to include dependencies, project status and licence info here --->
+![GitHub](https://img.shields.io/npm/v/npm)
+![GitHub repo size](https://img.shields.io/github/repo-size/lmt20/InternshipVietIS)
+![GitHub issues](https://img.shields.io/github/issues/lmt20/InternshipVietIS)
+![GitHub contributors](https://img.shields.io/github/contributors/lmt20/InternshipVietIS)
+![Twitter Follow](https://img.shields.io/twitter/follow/TruongLeManh?style=social)
 
-This is a simple boilerplate to get up and running with Electron and React. It is a customized version of [Alex Devero's](https://github.com/alexdevero/electron-react-webpack-boilerplate) repo and is used in my Electron course
+INTRODUCTION
+------------
+- This app is a customizable pomodoro timer that works on Window, MacOS, Linux . The aim of this app is to help you focus on any task you are working on, such as study, writing, or coding. This app is inspired by Pomodoro Technique which is a time management method developed by Francesco Cirillo.
+- This app is using ReactJS to build frontend and ElectronJS to handle backend logics. Using mongodb database is hosting on MongoDb Atlas cloud server
 
-### Install
+REQUIREMENTS
+------------
 
-#### Clone this repo
+Node verison >= v14.0.0
+npm version >= 6.0.0
 
-```
-git clone https://github.com/bradtraversy/simple-electron-react.git
-```
+INSTALLATION
+------------
+- Install the lastest version of Node and NPM.
+- Navigate to project folder.
+- Run: "npm install" to install neccessary packets for the project.
 
-#### Install dependencies
+CONFIGURATION AND USAGE
+-------------
+- Navigate to project folder.
+- Run: "npm start" to start server.
+- Run: "npm run package-linux to build the package to execute app in production environment.
+( Note: Package building currently only works in Linux-env, author hasn't tested in the others envs)
 
-```
-npm install
-```
+AUTHOR
+-----------
+👤 **Le Manh Truong**
+* Twitter: [@TruongLeManh](https://twitter.com/TruongLeManh)
+* Github: [@lmt20](https://github.com/lmt20)
+* LinkedIn: [@truong-le-manh](https://www.linkedin.com/in/truong-le-manh/)
 
-or
-
-```
-yarn
-```
-
-### Usage
-
-#### Run the app
-
-```
-npm run start
-```
-
-or
-
-```
-yarn start
-```
-
-#### Build the app (automatic)
-
-```
-npm run package
-```
-
-or
-
-```
-yarn package
-```
-
-#### Build the app (manual)
-
-```
-npm run build
-```
-
-or
-
-```
-yarn build
-```
-
-#### Test the app (after `npm run build` || `yarn run build`)
-
-```
-npm run prod
-```
-
-```
-yarn prod
-```
-
-### Change app title
-
-Change the app title in the **webpack.build.config.js** and the **webpack.dev.config.js** files
